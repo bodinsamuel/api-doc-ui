@@ -1,14 +1,14 @@
 $font1: 'Open Sans', Helvetica, 'Segoe UI', Arial, sans-serif;
 $font2: 'Montserrat', $font1;
-$font-size-base: 16px;
-$line-height-base: 21px;
+$font-size-base: 14px;
+$line-height-base: 20px;
 
 $font-stack1: 400 #{$font-size-base}/#{$line-height-base} $font1;
 $font-stack2: 400 #{$font-size-base}/#{$line-height-base} $font2;
 
 
-$font-size-xs: 12px;
-$font-size-s: 14px;
+$font-size-xs: 10px;
+$font-size-s: 12px;
 $font-size-l: 18px;
 
 
@@ -17,6 +17,10 @@ $color-base: #2d3b43;
 $color-base1: #2c3e50;
 $color-base2: #4E5C6E;
 
+$color-grey: #ccc;
+$color-grey-light: #e7e6e6;
+$color-red-light: #e14d4d;
+$color-blue-light: #16B3FF;
 $color-link: #16B3FF;
 
 

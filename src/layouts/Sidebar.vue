@@ -18,8 +18,7 @@
       <div class="nav-collection">
         <div class="nav-header">Endpoints</div>
         <div class="nav-children">
-          <a v-for="(path, name) in schema.paths" href="" :key="name"
-             class="nav-item">{{ name }}</a>
+          <router-link :to="{ name: 'Tag', params: { name: tag.name }}" v-for="(tag, key) in tags" :key="key" class="nav-item">{{ tag.name }}</router-link>
         </div>
       </div>
     </nav>
@@ -37,14 +36,17 @@ export default {
       return this.$route;
     },
     logo() {
-      if (this.schema.info['x-logo'].url) {
+      if (this.schema.info['x-logo']) {
         return this.schema.info['x-logo'].url;
       }
       return LogoBase;
     },
     schema() {
       return this.$store.state.Schema.current;
-    }
+    },
+    tags() {
+      return this.$store.state.Schema.tags;
+    },
   },
 };
 </script>
@@ -54,7 +56,6 @@ export default {
 
 .sidebar {
   margin: 0;
-  background: #F4F7FA;
   .brand {
     display: grid;
     grid-template-columns: auto auto;
@@ -83,6 +84,7 @@ export default {
     transition: font-size .3s ease-in-out, line-height .3s ease-in-out;
     font-size: 17px;
     line-height: 22px;
+    font-weight: 600;
   }
   .subtitle {
     font-size: 16px;
@@ -98,13 +100,15 @@ export default {
   }
   &-header {
     color: $color-base1;
-    font-size: $font-size-xs;
+    font-size: $font-size-base;
     font-weight: 600;
   }
   &-item {
     display: block;
-    font-size: $font-size-s;
+    font-size: $font-size-base;
     color: $color-base2;
+    line-height: 22px;
+    text-transform: capitalize;
     &:hover {
       text-decoration: none;
       color: $color-base;

@@ -31,8 +31,9 @@ export default {
   head() {
     return {
       link: [
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Montserrat:600|Open+Sans:400,600' }
-      ]
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Montserrat:600|Open+Sans:300,400,600' },
+        { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css' }
+      ],
     }
   },
   data() {
@@ -63,8 +64,11 @@ export default {
       // this.$store.dispatch('Schema/fetch', {
       //   url: '/static/swagger2/petstore.json'
       // });
+      // this.$store.dispatch('Schema/fetch', {
+      //   url: '/static/swagger2/slack.yaml'
+      // });
       this.$store.dispatch('Schema/fetch', {
-        url: '/static/swagger2/slack.yaml'
+        url: '/static/swagger2/instagram.json'
       });
 
     },
@@ -81,10 +85,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
   color: $color-base;
+  background: #F4F7FA;
 }
 .main {
   display: grid;
-  grid-template-columns: 250px 100vh;
+  grid-template-columns: 250px auto;
   min-height: 100vh;
 }
 
