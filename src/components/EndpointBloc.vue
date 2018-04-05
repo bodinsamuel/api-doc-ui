@@ -9,9 +9,7 @@
     </div>
 
     <pre v-highlightjs :key="def.__path"><code class="http">{{ def.__verb.toUpperCase() }} {{ def.__path }}</code></pre>
-    <p class="u-mt20" v-if="description">
-      {{ description }}
-    </p>
+    <vue-markdown v-if="description" :source="description" class="u-mt20" :key="def.__path"></vue-markdown>
 
     <div v-if="def.security" class="u-mt60">
       <h6 class="subhead u-mb10">Authorizations</h6>

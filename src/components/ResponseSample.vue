@@ -48,7 +48,7 @@ export default {
 
       // build response with schema
       if (this.response.schema && canJson) {
-        return OpenAPISampler.sample(this.response.schema, {skipReadOnly: true});
+        return OpenAPISampler.sample(this.response.schema);
       }
 
       // use hardcoded sample

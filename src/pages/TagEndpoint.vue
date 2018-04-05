@@ -6,7 +6,7 @@
     </div>
 
     <div class="u-mt60">
-      <endpoint-bloc class="bloc u-mt30" v-for="(method, key) in endpoint.endpoints" :key="key"
+      <endpoint-bloc class="bloc u-mt50" v-for="(method, key) in endpoint.endpoints" :key="key"
         :def="method" :globalParam="endpoint.endpoints.parameters" v-if="method.__verb !== 'parameters'"></endpoint-bloc>
     </div>
   </div>
