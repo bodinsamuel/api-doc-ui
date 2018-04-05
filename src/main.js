@@ -17,6 +17,17 @@ Vue.component('vue-markdown', VueMarkdown);
 import TagItem from '@/components/TagItem';
 Vue.component('TagItem', TagItem);
 
+import slugify from 'slugify';
+slugify.extend({ '/': '-' });
+slugify.extend({ '{': '-' });
+slugify.extend({ '}': '-' });
+Vue.filter('slugify', function(value) {
+  if (!value) {
+    return '';
+  }
+  return slugify(value);
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

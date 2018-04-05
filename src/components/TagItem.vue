@@ -1,5 +1,5 @@
 <template>
-  <span class="tag" :class="[ verb ]">
+  <span class="tag" :class="{ [verb]: verb, bigger: bigger }">
     <slot></slot>
   </span>
 </template>
@@ -9,7 +9,11 @@ export default {
   props: {
     verb: {
       type: String
-    }
+    },
+    bigger: {
+      type: String
+    },
+
   },
 };
 </script>
@@ -26,11 +30,15 @@ export default {
   background: $color-grey-light;
   color: $color-base;
 
-  font-size: 10px;
+  font-size: 11px;
   font-weight: bold;
 
   text-decoration: none;
   border-radius: 3px;
+  &.bigger {
+    font-size: 15px;
+    vertical-align: top;
+  }
   &.get {
     background-color: #1AB6FF;
     color: #fff;
@@ -46,6 +54,12 @@ export default {
   &.delete {
     background-color: #f15524;
     color: #fff;
+  }
+  &.red {
+    color: $color-red-light;
+  }
+  &.blue {
+    color: $color-blue-light;
   }
 }
 </style>

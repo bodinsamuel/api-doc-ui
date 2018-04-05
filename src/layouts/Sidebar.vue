@@ -11,14 +11,19 @@
     </div>
     <nav>
       <div class="nav-collection">
-        <router-link :to="{ name: 'Home' }" class="nav-item is-main">Home</router-link>
+        <router-link :to="{ name: 'Home' }" class="nav-item is-main is-home">Home</router-link>
         <router-link :to="{ name: 'Authentication' }" class="nav-item is-main">Authentication</router-link>
       </div>
 
       <div class="nav-collection">
         <div class="nav-header">Endpoints</div>
         <div class="nav-children">
-          <router-link :to="{ name: 'Tag', params: { name: tag.name }}" v-for="(tag, key) in tags" :key="key" class="nav-item">{{ tag.name }}</router-link>
+          <div v-for="(tag, key) in tags" :key="key">
+            <router-link  :to="{ name: 'Tag', params: { name: tag.__slug }}" class="nav-item">{{ tag.name }}</router-link>
+            <div v-if="((currentRoute.name === 'TagEndpoint' || currentRoute.name === 'Tag') && currentRoute.params.name === tag.__slug) && tagEndpoint && tagEndpoint.length > 0" class="nav-children u-pb20">
+              <router-link v-for="(endpoint, key) in tagEndpoint" :key="key" :to="{ name: 'TagEndpoint', params: { name: tag.__slug, endpoint: endpoint.slug  }}" class="nav-item" :title="endpoint.path">{{ endpoint.path }}</router-link>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
@@ -27,6 +32,7 @@
 
 <script>
 import LogoBase from '@/assets/logo.png';
+
 export default {
   data() {
     return {};
@@ -46,6 +52,23 @@ export default {
     },
     tags() {
       return this.$store.state.Schema.tags;
+    },
+    tagEndpoint() {
+      if (!this.$store.state.Schema.tagCurrent) {
+        return;
+      }
+
+      const endpoints = this.$store.getters['Schema/endpointsByTag'](this.$store.state.Schema.tagCurrent.name);
+      const group = {};
+
+      // Group by endpoint url path
+      endpoints.map((endpoint) => {
+        if (typeof group[endpoint.__path] !== 'undefined') {
+          return;
+        }
+        group[endpoint.__path] = { slug: endpoint.__slug, path: endpoint.__path };
+      });
+      return Object.values(group);
     },
   },
 };
@@ -107,19 +130,22 @@ export default {
     display: block;
     font-size: $font-size-base;
     color: $color-base2;
-    line-height: 22px;
+    line-height: 28px;
     text-transform: capitalize;
+    white-space: pre;
+    text-overflow: ellipsis;
+    overflow: hidden;
     &:hover {
       text-decoration: none;
       color: $color-base;
     }
-    &.router-link-exact-active {
+    &.router-link-active:not(.is-home), &.router-link-exact-active {
       font-weight: 600;
       color: $color-base;
     }
     &.is-main {
       font-size: $font-size-base;
-      line-height: 25px;
+      line-height: 30px;
     }
   }
 }

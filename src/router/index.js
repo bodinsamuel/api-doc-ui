@@ -5,6 +5,7 @@ import Meta from 'vue-meta';
 import Home from '@/pages/Home';
 import Authentication from '@/pages/Authentication';
 import Tag from '@/pages/Tag';
+import TagEndpoint from '@/pages/TagEndpoint';
 
 Vue.use(Router);
 Vue.use(Meta, {
@@ -22,6 +23,11 @@ const routes = [
     path: '/authentication',
     name: 'Authentication',
     component: Authentication,
+  },
+  {
+    path: '/tag/:name/:endpoint',
+    name: 'TagEndpoint',
+    component: TagEndpoint,
   },
   {
     path: '/tag/:name',

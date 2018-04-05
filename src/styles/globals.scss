@@ -12,19 +12,34 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font: $font-stack1;
   font-weight: 300;
   text-transform: capitalize;
-  & .tag {
+  color: $color-base;
+  .tag {
     margin-left: 0!important;
+  }
+  a {
+    color: inherit;
+  }
+  &.subhead {
+    color: $color-base3;
+    font-size: 14px;
+    font-weight: bold;
+    border-left: 20px solid $color-grey-light;
+    margin-left: -30px;
+    padding-left: 10px;
   }
 }
 
 h1, .h1 {
     font-size: $font-size-base * 3;
+    line-height: 1.1;
 }
 h2, .h2 {
     font-size: $font-size-base * 2.5;
+    line-height: 1.1;
 }
 h3, .h3 {
     font-size: $font-size-base * 2.0;
+    line-height: 1.1;
 }
 h4, .h4 {
     font-size: $font-size-base * 1.8;
@@ -65,6 +80,9 @@ a {
   background-color: rgba(27,31,35,0.05);
   border-radius: 3px;
   color: $color-red-light;
+  &.blue {
+    color: $color-blue-light;
+  }
 }
 code.hljs {
   background-color: #f8f8f8;
@@ -137,7 +155,7 @@ $positions: ( 'top', 'right', 'bottom', 'left' );
     padding: 12px 0;
   }
   td {
-    border-bottom: 1px solid $color-grey;
+    border-bottom: 1px solid $color-grey-light;
   }
 }
 
@@ -157,5 +175,14 @@ $positions: ( 'top', 'right', 'bottom', 'left' );
     &:hover {
       background-color: lighten(#1AB6FF, 10%);
     }
+  }
+}
+
+
+.message {
+  padding: 15px 15px;
+  color: $color-base1;
+  &.warning {
+    border-left: 4px solid $color-yellow;
   }
 }

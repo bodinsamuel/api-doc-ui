@@ -61,15 +61,21 @@ export default {
   },
   methods: {
     load() {
+      this.$store.dispatch('Schema/fetch', {
+        url: '/static/swagger2/fullspec.json'
+      });
       // this.$store.dispatch('Schema/fetch', {
       //   url: '/static/swagger2/petstore.json'
       // });
       // this.$store.dispatch('Schema/fetch', {
       //   url: '/static/swagger2/slack.yaml'
       // });
-      this.$store.dispatch('Schema/fetch', {
-        url: '/static/swagger2/instagram.json'
-      });
+      // this.$store.dispatch('Schema/fetch', {
+      //   url: '/static/swagger2/instagram.json'
+      // });
+      // this.$store.dispatch('Schema/fetch', {
+      //   url: '/static/swagger2/uber.json'
+      // });
 
     },
   },

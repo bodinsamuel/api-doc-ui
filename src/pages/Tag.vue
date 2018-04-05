@@ -9,34 +9,39 @@
     </div>
     <div class="u-mt40">
       <!-- <h3>Endpoints</h3> -->
-      <div v-for="(endpoints, path) in endpointsGrouped" :key="path" class="bloc u-mt30 ">
-        <h4 class="u-txt-bold u-pb10">{{ path }}</h4>
-        <table class="table">
-          <tbody>
-            <tr v-for="(endpoint, key) in endpoints" :key="key">
-              <td>
-                <tag-item :verb="endpoint.__verb">{{ endpoint.__verb.toUpperCase() }}</tag-item>
-              </td>
-              <td>
-                <span v-if="endpoint.summary">{{ endpoint.summary }}</span>
-                <span v-else class="u-c-grey u-txt-italic">No description...</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div v-for="(group, path) in endpointsGrouped" :key="path" class="bloc u-mt30 ">
+        <h4 class="u-txt-bold u-pb10">
+          <router-link :to="{ name: 'TagEndpoint', params: { name: tag.__slug, endpoint: group.slug } }">{{ path }}</router-link>
+        </h4>
+        <methods-list :methods="group.endpoints"></methods-list>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import slugify from 'slugify';
+
+import MethodsList from '@/components/MethodsList';
+
 export default {
+  components: {
+    MethodsList
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.$store.dispatch('Schema/currentTag', {
+      name: to.params.name,
+    });
+    next();
+  },
+  created() {
+    this.$store.dispatch('Schema/currentTag', {
+      name: this.$route.params.name,
+    });
+  },
   computed: {
-    slug() {
-      return this.$route.params.name;
-    },
     tag() {
-      return this.$store.getters['Schema/tagByName'](this.slug);
+      return this.$store.getters['Schema/tagBySlug'](this.$route.params.name);
     },
     endpointsGrouped() {
       const endpoints = this.$store.getters['Schema/endpointsByTag'](this.tag.name);
@@ -44,9 +49,9 @@ export default {
       // Group by endpoint url path
       endpoints.map((endpoint) => {
         if (typeof grouped[endpoint.__path] === 'undefined') {
-          grouped[endpoint.__path] = [];
+          grouped[endpoint.__path] = { slug: slugify(endpoint.__path, { lower: true }), endpoints: [] };
         }
-        grouped[endpoint.__path].push(endpoint);
+        grouped[endpoint.__path].endpoints.push(endpoint);
       });
       return grouped;
     },
