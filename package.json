@@ -15,8 +15,8 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,json}": ["prettier --write", "git add"],
-    "*.js": ["eslint"]
+    "*.{js,json,vue}": ["prettier --write", "git add"],
+    "*.{js,vue}": ["eslint"]
   },
   "prettier": {
     "tabWidth": 2,
