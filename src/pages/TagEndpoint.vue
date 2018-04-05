@@ -37,7 +37,9 @@ export default {
       return this.$store.getters['Schema/tagBySlug'](this.$route.params.name);
     },
     endpoint() {
-      return this.$store.getters['Schema/endpointBySlug'](this.$route.params.endpoint);
+      return this.$store.getters['Schema/endpointBySlug'](
+        this.$route.params.endpoint
+      );
     },
   },
   methods: {
@@ -47,12 +49,14 @@ export default {
         return false;
       }
 
-      return Object.keys(responses).filter((code) => {
-        return parseInt(code) >= 400;
-      }).map((code) => {
-        return responses[code];
-      });
-    }
-  }
+      return Object.keys(responses)
+        .filter((code) => {
+          return parseInt(code) >= 400;
+        })
+        .map((code) => {
+          return responses[code];
+        });
+    },
+  },
 };
 </script>

@@ -53,14 +53,16 @@ export default {
   },
   computed: {
     list() {
-      return this.params.filter((param) => {
-        return param.in === this.type;
-      }).sort((a, b) => {
-        if (a.required && !b.required) {
-          return false;
-        }
-        return a.name > b.name;
-      });
+      return this.params
+        .filter((param) => {
+          return param.in === this.type;
+        })
+        .sort((a, b) => {
+          if (a.required && !b.required) {
+            return false;
+          }
+          return a.name > b.name;
+        });
     },
   },
 };

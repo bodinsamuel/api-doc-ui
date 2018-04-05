@@ -8,10 +8,10 @@
 export default {
   props: {
     verb: {
-      type: String
+      type: String,
     },
     bigger: {
-      type: Boolean
+      type: Boolean,
     },
   },
 };
@@ -39,14 +39,15 @@ export default {
     vertical-align: middle;
   }
   &.get {
-    background-color: #1AB6FF;
+    background-color: #1ab6ff;
     color: #fff;
   }
   &.post {
     background-color: #03e03f;
     color: #fff;
   }
-  &.put, &.patch {
+  &.put,
+  &.patch {
     background-color: #ecd835;
     color: #fff;
   }

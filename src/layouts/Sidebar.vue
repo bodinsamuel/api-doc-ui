@@ -58,7 +58,9 @@ export default {
         return;
       }
 
-      const endpoints = this.$store.getters['Schema/endpointsByTag'](this.$store.state.Schema.tagCurrent.name);
+      const endpoints = this.$store.getters['Schema/endpointsByTag'](
+        this.$store.state.Schema.tagCurrent.name
+      );
       const group = {};
 
       // Group by endpoint url path
@@ -66,7 +68,10 @@ export default {
         if (typeof group[endpoint.__path] !== 'undefined') {
           return;
         }
-        group[endpoint.__path] = { slug: endpoint.__slug, path: endpoint.__path };
+        group[endpoint.__path] = {
+          slug: endpoint.__slug,
+          path: endpoint.__path,
+        };
       });
       return Object.values(group);
     },
@@ -84,7 +89,7 @@ export default {
     grid-template-columns: auto auto;
     grid-column-gap: 10px;
     margin: 20px 25px;
-    transition: margin .3s ease-in-out, min-width .3s ease-in-out;
+    transition: margin 0.3s ease-in-out, min-width 0.3s ease-in-out;
     justify-content: flex-start;
     &.is-big {
       margin: 20px 50px 40px 40px;
@@ -100,11 +105,11 @@ export default {
     }
   }
   .logo {
-    transition: width .3s ease-in-out;
+    transition: width 0.3s ease-in-out;
     width: 40px;
   }
   .title {
-    transition: font-size .3s ease-in-out, line-height .3s ease-in-out;
+    transition: font-size 0.3s ease-in-out, line-height 0.3s ease-in-out;
     font-size: 17px;
     line-height: 22px;
     font-weight: 600;
@@ -139,7 +144,8 @@ export default {
       text-decoration: none;
       color: $color-base;
     }
-    &.router-link-active:not(.is-home), &.router-link-exact-active {
+    &.router-link-active:not(.is-home),
+    &.router-link-exact-active {
       font-weight: 600;
       color: $color-base;
     }

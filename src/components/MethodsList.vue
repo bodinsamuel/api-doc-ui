@@ -18,7 +18,7 @@
 export default {
   props: {
     methods: {
-      type: Array
+      type: Array,
     },
   },
 };

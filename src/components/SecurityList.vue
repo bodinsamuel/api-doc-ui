@@ -18,7 +18,7 @@ export default {
     list() {
       return this.def.map((def) => {
         const key = Object.keys(def)[0];
-        return { name: key, items: def[key] }
+        return { name: key, items: def[key] };
       });
     },
   },

@@ -39,5 +39,5 @@ export default {
       return this.$store.state.Schema.current;
     },
   },
-}
+};
 </script>

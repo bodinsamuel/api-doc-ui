@@ -52,11 +52,9 @@ import SecurityList from '@/components/SecurityList';
 export default {
   props: {
     def: {
-      type: Object
+      type: Object,
     },
-    globalParam: {
-
-    },
+    globalParam: {},
   },
   components: {
     ParamsList,
@@ -77,24 +75,26 @@ export default {
         return false;
       }
 
-      const errors = Object.keys(this.def.responses).filter((code) => {
-        return parseInt(code) >= 400;
-      }).map((code) => {
-        return { code, def: this.def.responses[code] };
-      });
+      const errors = Object.keys(this.def.responses)
+        .filter((code) => {
+          return parseInt(code) >= 400;
+        })
+        .map((code) => {
+          return { code, def: this.def.responses[code] };
+        });
       return errors;
     },
 
     success() {
       if (typeof this.def.responses === 'undefined') {
-        return { };
+        return {};
       }
       if (typeof this.def.responses['200'] === 'undefined') {
-        return { };
+        return {};
       }
 
       return this.def.responses['200'];
-    }
+    },
   },
 };
 </script>

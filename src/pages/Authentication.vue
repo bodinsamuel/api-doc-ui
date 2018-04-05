@@ -48,13 +48,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 
 export default {
   computed: mapState({
-    schema: state => state.Schema.current,
-    host: state => state.Schema.host,
-    scheme: state => state.Schema.scheme,
+    schema: (state) => state.Schema.current,
+    host: (state) => state.Schema.host,
+    scheme: (state) => state.Schema.scheme,
     firstEndpoint() {
       const path = Object.keys(this.$store.state.Schema.current.paths)[0];
       const first = this.$store.state.Schema.current.paths[path];
@@ -63,17 +63,19 @@ export default {
         path,
         verb,
         values: first[verb],
-      }
+      };
     },
   }),
   methods: {
     codeHttp(def) {
       const endpoint = this.firstEndpoint;
       const schema = this.schema;
-      return `${endpoint.verb.toUpperCase()} ${endpoint.path} ${this.scheme.toUpperCase()}/1.1
+      return `${endpoint.verb.toUpperCase()} ${
+        endpoint.path
+      } ${this.scheme.toUpperCase()}/1.1
 Host: ${schema.host}
 ${def.name}: <string>`;
-    }
-  }
-}
+    },
+  },
+};
 </script>

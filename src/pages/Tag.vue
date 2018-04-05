@@ -26,7 +26,7 @@ import MethodsList from '@/components/MethodsList';
 
 export default {
   components: {
-    MethodsList
+    MethodsList,
   },
   beforeRouteUpdate(to, from, next) {
     this.$store.dispatch('Schema/currentTag', {
@@ -44,17 +44,22 @@ export default {
       return this.$store.getters['Schema/tagBySlug'](this.$route.params.name);
     },
     endpointsGrouped() {
-      const endpoints = this.$store.getters['Schema/endpointsByTag'](this.tag.name);
+      const endpoints = this.$store.getters['Schema/endpointsByTag'](
+        this.tag.name
+      );
       const grouped = {};
       // Group by endpoint url path
       endpoints.map((endpoint) => {
         if (typeof grouped[endpoint.__path] === 'undefined') {
-          grouped[endpoint.__path] = { slug: slugify(endpoint.__path, { lower: true }), endpoints: [] };
+          grouped[endpoint.__path] = {
+            slug: slugify(endpoint.__path, { lower: true }),
+            endpoints: [],
+          };
         }
         grouped[endpoint.__path].endpoints.push(endpoint);
       });
       return grouped;
     },
   },
-}
+};
 </script>

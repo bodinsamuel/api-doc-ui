@@ -36,7 +36,7 @@ export default {
     },
     mergedProduces() {
       // use a set to easily dedup mime
-      const merge =new Set(this.globalProduces)
+      const merge = new Set(this.globalProduces);
       merge.add(...this.produces);
 
       // then convert to array, because vue does not support Map/Set
@@ -44,7 +44,9 @@ export default {
     },
     example() {
       const type = this.type;
-      const canJson = this.mergedProduces.includes('application/json') && this.type === 'application/json';
+      const canJson =
+        this.mergedProduces.includes('application/json') &&
+        this.type === 'application/json';
 
       // build response with schema
       if (this.response.schema && canJson) {
@@ -52,8 +54,10 @@ export default {
       }
 
       // use hardcoded sample
-      if (!this.response.examples
-          || typeof this.response.examples[this.type] === 'undefined') {
+      if (
+        !this.response.examples ||
+        typeof this.response.examples[this.type] === 'undefined'
+      ) {
         if (canJson) {
           return {};
         }
