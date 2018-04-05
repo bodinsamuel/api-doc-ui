@@ -54,6 +54,7 @@
           {
             "in": "query",
             "name": "search",
+            "type": "string",
             "description": "Search string",
             "required": true
           },
@@ -92,7 +93,15 @@
             "required": false
           }
         ],
-        "responses": { "405": { "description": "Invalid input" } },
+        "responses": {
+          "200": {
+            "description": "200 Ok",
+            "schema": {
+              "$ref": "#/definitions/BasicResponse"
+            }
+          },
+          "405": { "description": "Invalid input" }
+        },
         "security": [
           { "petstore_auth": ["write:pets", "read:pets"] },
           { "api_key": [] }
@@ -153,6 +162,16 @@
         }
       },
       "xml": { "name": "Pet" }
+    },
+
+    "BasicResponse": {
+      "type": "object",
+      "properties": {
+        "ok": {
+          "type": "string",
+          "example": "good"
+        }
+      }
     }
   }
 }

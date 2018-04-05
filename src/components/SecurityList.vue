@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div v-for="(auth) in list" :key="auth.name">
-      {{ auth.name }} <span v-if="auth.items.length > 0">(<span v-for="(item) in auth.items" :key="item"><tag-item verb="red">{{ item }}</tag-item></span>)</span>
+    <p class="u-mb10">This endpoint require the special authorization listed below:</p>
+    <div v-for="auth in list" :key="auth.name">
+      - {{ auth.name }} <span v-if="auth.items.length > 0">(<span v-for="item in auth.items" :key="item"><tag-item verb="red">{{ item }}</tag-item></span>)</span>
     </div>
   </div>
 </template>

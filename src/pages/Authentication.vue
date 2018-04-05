@@ -6,7 +6,7 @@
 
     </div>
     <div class="u-mt20 bloc" v-for="(def, name) in schema.securityDefinitions" :key="name">
-      <h3 class="u-mb10"><tag-item>{{ def.type }}</tag-item>{{ name }}</h3>
+      <h3 class="u-mb10"><tag-item bigger>{{ def.type }}</tag-item>{{ name }}</h3>
       <p v-if="def.description">{{ def.description }}</p>
       <p v-else-if="!def.description && def.type === 'oauth2'">
         OAuth 2.0 is a protocol that lets your app request authorization without sending a password.

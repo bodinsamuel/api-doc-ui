@@ -13,6 +13,7 @@ export default {
     tagCurrent: null,
     endpoints: [],
     endpointsGrouped: [],
+    produces: [],
   },
 
   getters: {
@@ -38,7 +39,6 @@ export default {
   mutations: {
     setCurrentTag(state, { name }) {
       state.tagCurrent = this.getters['Schema/tagBySlug'](name);
-      console.log(state, this);
     },
     setCurrent(state, { parsed }) {
       state.current = parsed;
@@ -46,6 +46,7 @@ export default {
       state.scheme = parsed.schemes ? parsed.schemes[0] : 'https';
       state.basePath = parsed.basePath || '/';
       state.baseUrl = `${state.scheme}://${state.host}${state.basePath}`;
+      state.produces = parsed.produces || [];
 
       if (parsed.tags) {
         state.tags = parsed.tags;
@@ -68,6 +69,7 @@ export default {
 
             // If a path is tagged but tag has no global definition we push it
             if (
+              final.tags &&
               final.tags.length > 0 &&
               !state.tags.find((tag) => tag.name === final.tags[0])
             ) {

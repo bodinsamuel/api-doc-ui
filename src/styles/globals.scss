@@ -65,11 +65,20 @@ a {
 .u-c-grey {
   color: $color-grey;
 }
+.u-c-red {
+  color: $color-red-light;
+}
 .u-txt-italic {
   font-style: italic;
 }
 .u-txt-bold {
   font-weight: bold;
+}
+.u-txt-xs {
+  font-size: $font-size-xs;
+}
+.u-txt-s {
+  font-size: $font-size-s;
 }
 
 // Code
@@ -90,6 +99,31 @@ code.hljs {
   line-height: 16px;
   padding: 15px 25px 20px 25px;
   border-radius: 6px;
+}
+.highlightjs-toolbar {
+  margin: 0 0 -20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 6px 6px 0 0;
+  background-color: #f1edeb;
+  list-style: none;
+  color: #8995c7;
+  padding: 8px 16px;
+  position: relative;
+  + pre code {
+    padding-top: 20px;
+  }
+  button {
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: none;
+    font-size: $font-size-s;
+    color: $color-base2;
+    cursor: pointer;
+    &:hover, &.is-active {
+      text-decoration: underline;
+    }
+  }
 }
 
 // *******************************
@@ -129,7 +163,7 @@ $positions: ( 'top', 'right', 'bottom', 'left' );
 
 
 .container {
-  max-width: 830px;
+  max-width: 900px;
   // margin: 0 auto;
 }
 
@@ -152,7 +186,8 @@ $positions: ( 'top', 'right', 'bottom', 'left' );
     text-align: left;
   }
   td, th {
-    padding: 12px 0;
+    padding: 20px 0;
+    vertical-align: top;
   }
   td {
     border-bottom: 1px solid $color-grey-light;

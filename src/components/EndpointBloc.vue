@@ -13,24 +13,26 @@
       {{ description }}
     </p>
 
-    <div v-if="def.security" class="u-mt50">
+    <div v-if="def.security" class="u-mt60">
       <h6 class="subhead u-mb10">Authorizations</h6>
       <security-list :def="def.security"></security-list>
     </div>
 
-    <params-list :params="def.parameters" type="path" class="u-mt50"></params-list>
-    <params-list :params="def.parameters" type="header" class="u-mt50"></params-list>
-    <params-list :params="def.parameters" type="cookie" class="u-mt50"></params-list>
-    <params-list :params="def.parameters" type="query" class="u-mt50"></params-list>
-    <params-list :params="def.parameters" type="body" class="u-mt50"></params-list>
-    <params-list :params="def.parameters" type="formData" class="u-mt50"></params-list>
-
-    <div class="u-mt50">
-      <h6 class="subhead u-mb10">Response</h6>
-      <response-sample :response="success" :key="def.__path"></response-sample>
+    <div v-if="def.parameters">
+      <params-list :params="def.parameters" type="path" class="u-mt60"></params-list>
+      <params-list :params="def.parameters" type="header" class="u-mt60"></params-list>
+      <params-list :params="def.parameters" type="cookie" class="u-mt60"></params-list>
+      <params-list :params="def.parameters" type="query" class="u-mt60"></params-list>
+      <params-list :params="def.parameters" type="body" class="u-mt60"></params-list>
+      <params-list :params="def.parameters" type="formData" class="u-mt60"></params-list>
     </div>
 
-    <div v-if="errors.length > 0" class="u-mt50">
+    <div class="u-mt60">
+      <h6 class="subhead u-mb10">Response</h6>
+      <response-sample :response="success" :produces="def.produces" :key="def.__path"></response-sample>
+    </div>
+
+    <div v-if="errors.length > 0" class="u-mt60">
       <h6 class="subhead u-mb10">Errors</h6>
       <table class="table">
         <tbody>
@@ -53,6 +55,9 @@ export default {
   props: {
     def: {
       type: Object
+    },
+    globalParam: {
+
     },
   },
   components: {

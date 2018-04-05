@@ -11,9 +11,8 @@ export default {
       type: String
     },
     bigger: {
-      type: String
+      type: Boolean
     },
-
   },
 };
 </script>
@@ -25,9 +24,9 @@ export default {
   padding: 4px 6px;
   margin: 0 6px;
   line-height: 1;
-  vertical-align: middle;
+  vertical-align: top;
 
-  background: $color-grey-light;
+  background: $color-grey-lighter;
   color: $color-base;
 
   font-size: 11px;
@@ -37,7 +36,7 @@ export default {
   border-radius: 3px;
   &.bigger {
     font-size: 15px;
-    vertical-align: top;
+    vertical-align: middle;
   }
   &.get {
     background-color: #1AB6FF;
