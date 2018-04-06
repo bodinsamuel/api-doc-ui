@@ -2,7 +2,7 @@
 const path = require('path');
 const utils = require('./utils');
 const webpack = require('webpack');
-const config = require('../config/docs');
+const config = require('../config');
 const merge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base.conf');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -19,16 +19,17 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   module: {
     rules: utils.styleLoaders({
-      sourceMap: config.build.productionSourceMap,
+      sourceMap: config.docs.productionSourceMap,
       extract: true,
       usePostCSS: true,
     }),
   },
-  devtool: config.build.productionSourceMap ? config.build.devtool : false,
+  devtool: config.docs.productionSourceMap ? config.docs.devtool : false,
   output: {
     path: path.resolve(__dirname, '../docs'),
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js'),
+    publicPath: config.docs.assetsPublicPath,
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
@@ -41,7 +42,7 @@ const webpackConfig = merge(baseWebpackConfig, {
           warnings: false,
         },
       },
-      sourceMap: config.build.productionSourceMap,
+      sourceMap: config.docs.productionSourceMap,
       parallel: true,
     }),
     // extract css into its own file
@@ -56,7 +57,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
     new OptimizeCSSPlugin({
-      cssProcessorOptions: config.build.productionSourceMap
+      cssProcessorOptions: config.docs.productionSourceMap
         ? { safe: true, map: { inline: false } }
         : { safe: true },
     }),
@@ -65,7 +66,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename:
-        process.env.NODE_ENV === 'testing' ? 'index.html' : config.build.index,
+        process.env.NODE_ENV === 'testing' ? 'index.html' : config.docs.index,
       template: 'index.html',
       inject: true,
       minify: {
@@ -114,33 +115,11 @@ const webpackConfig = merge(baseWebpackConfig, {
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '../static'),
-        to: config.build.assetsSubDirectory,
+        to: config.docs.assetsSubDirectory,
         ignore: ['.*'],
       },
     ]),
   ],
 });
-
-if (config.build.productionGzip) {
-  const CompressionWebpackPlugin = require('compression-webpack-plugin');
-
-  webpackConfig.plugins.push(
-    new CompressionWebpackPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: new RegExp(
-        '\\.(' + config.build.productionGzipExtensions.join('|') + ')$'
-      ),
-      threshold: 10240,
-      minRatio: 0.8,
-    })
-  );
-}
-
-if (config.build.bundleAnalyzerReport) {
-  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-    .BundleAnalyzerPlugin;
-  webpackConfig.plugins.push(new BundleAnalyzerPlugin());
-}
 
 module.exports = webpackConfig;
