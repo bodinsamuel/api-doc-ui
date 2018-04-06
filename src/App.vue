@@ -44,7 +44,7 @@ export default {
         {
           rel: 'stylesheet',
           href:
-            'https://fonts.googleapis.com/css?family=Montserrat:600|Open+Sans:300,400,600',
+            'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300,400,600',
         },
         {
           rel: 'stylesheet',
@@ -104,7 +104,7 @@ export default {
 @import '~@/styles/vars.scss';
 
 #app {
-  font: $font-stack1;
+  font: $font-stack2;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: left;

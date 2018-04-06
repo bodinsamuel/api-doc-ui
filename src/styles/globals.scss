@@ -3,6 +3,7 @@
 /** GLOBAL **/
 body {
   margin: 0;
+  font: $font-stack2;
 }
 * {
   box-sizing: border-box;
@@ -52,6 +53,7 @@ h6, .h6 {
 }
 p {
   margin: 0;
+  font: $font-stack2;
 }
 a {
   color: $color-link;
@@ -117,7 +119,7 @@ code.hljs {
     -webkit-appearance: none;
     background-color: transparent;
     border: none;
-    font-size: $font-size-s;
+    font-size: $font-size-xs;
     color: $color-base2;
     cursor: pointer;
     &:hover, &.is-active {
@@ -180,6 +182,7 @@ $positions: ( 'top', 'right', 'bottom', 'left' );
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
+  font-size: $font-size-s;
   th {
     font-weight: 700;
     border-bottom: 2px solid $color-blue-light;
@@ -219,5 +222,13 @@ $positions: ( 'top', 'right', 'bottom', 'left' );
   color: $color-base1;
   &.warning {
     border-left: 4px solid $color-yellow;
+  }
+}
+
+// ************************** markdown
+.markdown {
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 40px;
+    margin-bottom: 20px;
   }
 }

@@ -9,7 +9,7 @@
       <h3 class="u-mb10"><tag-item bigger>{{ def.type }}</tag-item>{{ name }}</h3>
       <p v-if="def.description">{{ def.description }}</p>
       <p v-else-if="!def.description && def.type === 'oauth2'">
-        OAuth 2.0 is a protocol that lets your app request authorization without sending a password.
+        OAuth 2.0 is an open protocol to allow secure authorization in a simple and standard method from web, mobile and desktop applications.
       </p>
 
       <div v-if="def.scopes" class="u-mv20">
@@ -40,7 +40,7 @@
       </div>
 
       <div v-if="def.in === 'header'">
-        You should pass the token in the <code class="code-inline">headers</code>, with a key named <code class="code-inline">{{ def.name }}</code>, like this:
+        <p>You should pass the token in the <code class="code-inline">headers</code>, with a key named <code class="code-inline">{{ def.name }}</code>, like this:</p>
         <pre v-highlightjs="codeHttp(def)"><code class="http"></code></pre>
       </div>
     </div>

@@ -29,6 +29,7 @@ export default {
   background: $color-grey-lighter;
   color: $color-base;
 
+  font: $font-stack1;
   font-size: 11px;
   font-weight: bold;
 

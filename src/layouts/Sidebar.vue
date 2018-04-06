@@ -83,6 +83,7 @@ export default {
 @import '~@/styles/vars.scss';
 
 .sidebar {
+  font: $font-stack1;
   margin: 0;
   .brand {
     display: grid;
@@ -128,12 +129,12 @@ export default {
   }
   &-header {
     color: $color-base1;
-    font-size: $font-size-base;
+    font-size: $font-size-s;
     font-weight: 600;
   }
   &-item {
     display: block;
-    font-size: $font-size-base;
+    font-size: $font-size-s;
     color: $color-base2;
     line-height: 28px;
     text-transform: capitalize;
@@ -150,7 +151,7 @@ export default {
       color: $color-base;
     }
     &.is-main {
-      font-size: $font-size-base;
+      font-size: $font-size-s;
       line-height: 30px;
     }
   }
