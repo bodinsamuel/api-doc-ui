@@ -28,11 +28,23 @@ Vue.filter('slugify', function(value) {
   return slugify(value);
 });
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  store,
-  components: { App },
-  template: '<App/>',
-});
+export default () => {
+  /* eslint-disable no-new */
+  new Vue({
+    el: '#app',
+    router,
+    store,
+    components: { App },
+    template: '<App/>',
+    created() {
+      this.load();
+    },
+    methods: {
+      load() {
+        this.$store.dispatch('Schema/fetch', {
+          url: '/static/swagger2/instagram.yaml',
+        });
+      },
+    },
+  });
+};

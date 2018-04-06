@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="fade-in">
-      <div v-if="!loading && !error" class="main">
+      <div v-if="ready && !error" class="main">
         <sidebar-view />
         <main>
           <header-view />
@@ -10,7 +10,17 @@
       </div>
       <global-error v-if="error" />
     </transition>
-    <div v-if="loading">
+    <transition name="fade-in">
+      <div v-if="file && loading">
+        <div class="u-p40">
+          <h1 class="u-mb20">Loading...</h1>
+        </div>
+      </div>
+    </transition>
+    <div v-if="!file && !loading">
+      <div class="u-p40">
+        <h1 class="u-mb20">No file specified...</h1>
+      </div>
     </div>
   </div>
 </template>
@@ -46,17 +56,26 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      ready: false,
+      loading: false,
     };
   },
   watch: {
     definition() {
       setTimeout(() => {
+        this.ready = true;
         this.loading = false;
-      }, 500);
+      }, 200);
     },
   },
   computed: {
+    file() {
+      if (!this.$store.state.Schema.file) {
+        return false;
+      }
+      this.load();
+      return this.$store.state.Schema.file;
+    },
     definition() {
       return this.$store.state.Schema.current;
     },
@@ -64,29 +83,18 @@ export default {
       return this.$store.state.error;
     },
   },
-  created() {
-    this.load();
-  },
   methods: {
     load() {
-      // this.$store.dispatch('Schema/fetch', {
-      //   url: '/static/openapi3/petstore.yaml'
-      // });
-      // this.$store.dispatch('Schema/fetch', {
-      //   url: '/static/swagger2/fullspec.json'
-      // });
-      // this.$store.dispatch('Schema/fetch', {
-      //   url: '/static/swagger2/petstore.json'
-      // });
-      // this.$store.dispatch('Schema/fetch', {
-      //   url: '/static/swagger2/slack.yaml'
-      // });
-      this.$store.dispatch('Schema/fetch', {
-        url: '/static/swagger2/instagram.yaml',
-      });
-      // this.$store.dispatch('Schema/fetch', {
-      //   url: '/static/swagger2/uber.json'
-      // });
+      // we display loading only if it's slow
+      setTimeout(() => {
+        this.loading = true;
+        // because a timeout can happen after the load
+        // tricks it by rechecking here
+        // I could have stored the timeout but hey ... :D
+        if (this.definition) {
+          this.ready = true;
+        }
+      }, 300);
     },
   },
 };
@@ -102,6 +110,7 @@ export default {
   text-align: left;
   color: $color-base;
   background: #f4f7fa;
+  min-height: 100vh;
 }
 .main {
   display: grid;

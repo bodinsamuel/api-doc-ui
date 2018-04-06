@@ -4,6 +4,7 @@ import slugify from 'slugify';
 export default {
   namespaced: true,
   state: {
+    file: null,
     current: null,
     host: null,
     basePath: null,
@@ -37,6 +38,9 @@ export default {
   },
 
   mutations: {
+    setFile(state, url) {
+      state.file = url;
+    },
     setCurrentTag(state, { name }) {
       state.tagCurrent = this.getters['Schema/tagBySlug'](name);
     },
@@ -112,9 +116,12 @@ export default {
       commit('setCurrentTag', { name });
     },
     async fetch({ commit, rootState }, { url }) {
+      commit('setFile', url);
       try {
         const parsed = await SwaggerParser.dereference(url);
-        commit('setCurrent', { parsed });
+        setTimeout(() => {
+          commit('setCurrent', { parsed });
+        }, 2000);
       } catch (e) {
         console.error(e);
         if (process.env.NODE_ENV === 'production') {
