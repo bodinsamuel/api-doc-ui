@@ -49,7 +49,7 @@ export default {
         {
           rel: 'stylesheet',
           href:
-            'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css',
+            'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/atom-one-light.min.css',
         },
       ],
     };

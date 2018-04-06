@@ -35,22 +35,28 @@ export default {
       return this.$store.state.Schema.produces;
     },
     mergedProduces() {
-      // use a set to easily dedup mime
-      const merge = new Set(this.globalProduces);
-      merge.add(...this.produces);
+      if (!this.produces) {
+        return this.globalProduces;
+      }
 
-      // then convert to array, because vue does not support Map/Set
-      return Array.from(merge);
+      return this.produces;
     },
     example() {
       const type = this.type;
       const canJson =
         this.mergedProduces.includes('application/json') &&
         this.type === 'application/json';
+      const canXml =
+        this.mergedProduces.includes('application/xml') &&
+        this.type === 'application/xml';
 
       // build response with schema
-      if (this.response.schema && canJson) {
-        return OpenAPISampler.sample(this.response.schema);
+      if (this.response.schema) {
+        if (canJson) {
+          return this.getJson();
+        } else if (canXml) {
+          return this.getXml();
+        }
       }
 
       // use hardcoded sample
@@ -65,6 +71,15 @@ export default {
       }
 
       return this.response.examples[this.type];
+    },
+  },
+  methods: {
+    getJson() {
+      return OpenAPISampler.sample(this.response.schema);
+    },
+
+    getXml() {
+      return '<xml>Preview not supported right now...</xml>';
     },
   },
 };

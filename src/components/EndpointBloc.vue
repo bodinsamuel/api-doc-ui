@@ -30,6 +30,11 @@
       <response-sample :response="success" :produces="def.produces" :key="def.__path"></response-sample>
     </div>
 
+    <div v-if="def['x-code-samples']" class="u-mt60">
+      <h6 class="subhead u-mb10">Examples</h6>
+      <code-sample :samples="def['x-code-samples']" :key="def.__path"></code-sample>
+    </div>
+
     <div v-if="errors.length > 0" class="u-mt60">
       <h6 class="subhead u-mb10">Errors</h6>
       <table class="table">
@@ -47,6 +52,7 @@
 <script>
 import ParamsList from '@/components/ParamsList';
 import ResponseSample from '@/components/ResponseSample';
+import CodeSample from '@/components/CodeSample';
 import SecurityList from '@/components/SecurityList';
 
 export default {
@@ -59,6 +65,7 @@ export default {
   components: {
     ParamsList,
     ResponseSample,
+    CodeSample,
     SecurityList,
   },
   computed: {
