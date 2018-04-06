@@ -1,27 +1,21 @@
-# api-doc-ui
+# Open API Doc Generator
+A very simple way to generate a beautiful and usable documentation with your open api specifications. It use [vue.js](https://github.com/vuejs/vue).
 
-> A Vue.js project
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
+# Usage
+```javascript
+this is a very WIP project, 
+there is no npm or standalone for now
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+# Documentation
+You can check our [live example](https://bodinsamuel.github.io/openapi-doc-generator/) and read the [documentation](/Documentation.md)
+
+# Todo
+- [ ] Schema Request display
+- [ ] Schema Response display
+- [ ] Custom markdown 
+- [ ] Console for testing
+
+# Contribution
+Please, this project is open to any contribution or request, I'll be glad to review and merge them :)
