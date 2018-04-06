@@ -30,6 +30,7 @@ export default {
   color: $color-base;
 
   font: $font-stack1;
+  line-height: 12px;
   font-size: 11px;
   font-weight: bold;
 
