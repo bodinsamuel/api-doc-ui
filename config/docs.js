@@ -8,7 +8,7 @@ module.exports = {
   dev: {
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/openapi-doc-generator',
+    assetsPublicPath: '/openapi-doc-generator/',
     proxyTable: {},
 
     // Various Dev Server settings
