@@ -28,16 +28,19 @@ Vue.filter('slugify', function(value) {
   return slugify(value);
 });
 
+// Default options for configuration
 const defaults = {
   file: null,
+  baseUrl: '/',
 };
+
 export default (args) => {
   const config = Object.assign({}, defaults, args);
 
   /* eslint-disable no-new */
   new Vue({
     el: '#app',
-    router,
+    router: router(config.baseUrl),
     store,
     components: { App },
     template: '<App/>',

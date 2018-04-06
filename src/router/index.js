@@ -44,8 +44,11 @@ const scrollBehavior = (to, from, savedPosition) => {
   return { x: 0, y: 0 };
 };
 
-export default new Router({
-  mode: 'history',
-  routes,
-  scrollBehavior,
-});
+export default (baseUrl) => {
+  return new Router({
+    base: baseUrl,
+    mode: 'history',
+    routes,
+    scrollBehavior,
+  });
+};
