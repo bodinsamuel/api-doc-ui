@@ -117,11 +117,13 @@ export default {
     },
     async fetch({ commit, rootState }, { url }) {
       commit('setFile', url);
+      if (!url) {
+        return;
+      }
+
       try {
         const parsed = await SwaggerParser.dereference(url);
-        setTimeout(() => {
-          commit('setCurrent', { parsed });
-        }, 2000);
+        commit('setCurrent', { parsed });
       } catch (e) {
         console.error(e);
         if (process.env.NODE_ENV === 'production') {

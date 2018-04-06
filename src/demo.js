@@ -1,3 +1,5 @@
 import main from './main';
 
-main();
+main({
+  file: '/static/swagger2/instagram.yaml',
+});

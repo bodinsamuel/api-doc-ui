@@ -28,7 +28,12 @@ Vue.filter('slugify', function(value) {
   return slugify(value);
 });
 
-export default () => {
+const defaults = {
+  file: null,
+};
+export default (args) => {
+  const config = Object.assign({}, defaults, args);
+
   /* eslint-disable no-new */
   new Vue({
     el: '#app',
@@ -42,7 +47,7 @@ export default () => {
     methods: {
       load() {
         this.$store.dispatch('Schema/fetch', {
-          url: '/static/swagger2/instagram.yaml',
+          url: config.file,
         });
       },
     },
