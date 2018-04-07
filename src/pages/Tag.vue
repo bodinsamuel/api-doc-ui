@@ -28,9 +28,9 @@ export default {
   head() {
     let tag = '';
     if (this.tag) {
-      const tag = `${this.tag.name
-        .substr(0, 1)
-        .toUpperCase()}${this.tag.name.substr(1)}`;
+      tag = `${this.tag.name.substr(0, 1).toUpperCase()}${this.tag.name.substr(
+        1
+      )}`;
     }
     return {
       title: `${tag} - ${this.schema.info.title} documentation`,
