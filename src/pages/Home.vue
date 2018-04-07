@@ -10,7 +10,7 @@
         </div>
       </div>
 
-      <div class="u-mt40">
+      <div class="u-mt40" v-if="schema.info.contact || schema.info.termsOfService || schema.info.license">
         <h2 class="u-mb30">Informations</h2>
         <div v-if="schema.info.contact">
           <p>If you need help you can contact us:</p>
