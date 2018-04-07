@@ -14,11 +14,17 @@ export default async (spec) => {
         description: Alt.string(),
         title: Alt.string(),
         version: Alt.string(),
+        'x-logo': Alt.object().schema({
+          schema: Alt({
+            url: Alt.internet().url(),
+          }),
+          returnErrors: true,
+        }),
       }).options({ required: true }),
       returnErrors: true,
     }),
-    schemes: Alt.array(),
-    tags: Alt.array(),
+    schemes: Alt.array().min(1),
+    tags: Alt.array().min(1),
     paths: Alt.object(),
   })
     .body(spec)
@@ -26,6 +32,8 @@ export default async (spec) => {
       required: true,
     })
     .validate();
+
+  console.log(spec);
 
   return hasError;
 };

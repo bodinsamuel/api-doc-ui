@@ -31,8 +31,6 @@
 </template>
 
 <script>
-import LogoBase from '@/assets/logo.png';
-
 export default {
   data() {
     return {};
@@ -45,7 +43,7 @@ export default {
       if (this.schema.info['x-logo']) {
         return this.schema.info['x-logo'].url;
       }
-      return LogoBase;
+      return '';
     },
     hasAuthentication() {
       return this.$store.state.Schema.hasAuthentication;

@@ -35,7 +35,7 @@
     ]
   },
   "dependencies": {
-    "altheia-async-data-validator": "^1.0.2",
+    "altheia-async-data-validator": "^1.0.3",
     "openapi-sampler": "^1.0.0-beta.9",
     "slugify": "1.2.9",
     "swagger-parser": "4.0.2",
