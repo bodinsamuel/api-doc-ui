@@ -50,6 +50,10 @@ schemes:
 - http
 paths:
   "/pet":
+    get:
+      tags:
+      - pet
+      summary: Search pets
     post:
       tags:
       - pet

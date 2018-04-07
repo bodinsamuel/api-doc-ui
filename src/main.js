@@ -38,9 +38,11 @@ export default (args) => {
   const config = Object.assign({}, defaults, args);
 
   /* eslint-disable no-new */
+  const r = router(config.baseUrl);
+
   new Vue({
     el: '#app',
-    router: router(config.baseUrl),
+    router: r,
     store,
     components: { App },
     template: '<App/>',
@@ -50,7 +52,7 @@ export default (args) => {
     methods: {
       load() {
         this.$store.dispatch('Schema/fetch', {
-          url: config.file,
+          file: config.file,
         });
       },
     },

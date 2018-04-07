@@ -34,6 +34,11 @@
 
 <script>
 export default {
+  head() {
+    return {
+      title: `${this.schema.info.title} Documentation`,
+    };
+  },
   computed: {
     schema() {
       return this.$store.state.Schema.current;

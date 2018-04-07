@@ -1,5 +1,5 @@
 <template>
-  <div class="u-p40 container">
+  <div class="u-p40 container" v-if="tag">
     <div class="bloc">
       <div v-if="tag.externalDocs" style="float: right;">
         <a :href="tag.externalDocs.url" class="button success" :title="tag.externalDocs.url">Find out more !</a>
@@ -25,23 +25,48 @@ import slugify from 'slugify';
 import MethodsList from '@/components/MethodsList';
 
 export default {
+  head() {
+    let tag = '';
+    if (this.tag) {
+      const tag = `${this.tag.name
+        .substr(0, 1)
+        .toUpperCase()}${this.tag.name.substr(1)}`;
+    }
+    return {
+      title: `${tag} - ${this.schema.info.title} documentation`,
+    };
+  },
   components: {
     MethodsList,
   },
   beforeRouteUpdate(to, from, next) {
-    this.$store.dispatch('Schema/currentTag', {
+    this.$store.dispatch('Schema/tagCurrent', {
       name: to.params.name,
     });
     next();
   },
   created() {
-    this.$store.dispatch('Schema/currentTag', {
+    // we watch the value to display a 404 if needed
+    // It could happen if an user followed an old link or made a typo or whatever
+    this.$store.watch(
+      (state) => state.Schema.tagCurrent,
+      (newValue) => {
+        if (!newValue) {
+          this.$store.state.page404 = true;
+        }
+      }
+    );
+
+    this.$store.dispatch('Schema/tagCurrent', {
       name: this.$route.params.name,
     });
   },
   computed: {
+    schema() {
+      return this.$store.state.Schema.current;
+    },
     tag() {
-      return this.$store.getters['Schema/tagBySlug'](this.$route.params.name);
+      return this.$store.state.Schema.tagCurrent;
     },
     endpointsGrouped() {
       const endpoints = this.$store.getters['Schema/endpointsByTag'](

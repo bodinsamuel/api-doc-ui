@@ -1,15 +1,20 @@
 import SwaggerParser from 'swagger-parser';
 import slugify from 'slugify';
 
+import SpecMinimumCheck from '@/helpers/spec-minimum-check';
+import SpecNormalizer from '@/helpers/spec-normalizer';
+
 export default {
   namespaced: true,
   state: {
+    loading: false,
     file: null,
     current: null,
     host: null,
     basePath: null,
     baseUrl: null,
     scheme: 'https',
+    hasAuthentication: false,
     tags: [],
     tagCurrent: null,
     endpoints: [],
@@ -38,19 +43,28 @@ export default {
   },
 
   mutations: {
-    setFile(state, url) {
-      state.file = url;
+    setLoading(state, bool) {
+      state.loading = bool;
     },
-    setCurrentTag(state, { name }) {
+    setFile(state, file) {
+      state.file = file;
+    },
+    setTagCurrent(state, { name }) {
       state.tagCurrent = this.getters['Schema/tagBySlug'](name);
     },
     setCurrent(state, { parsed }) {
+      state.loading = false;
+
       state.current = parsed;
       state.host = parsed.host || 'localhost';
       state.scheme = parsed.schemes ? parsed.schemes[0] : 'https';
       state.basePath = parsed.basePath || '/';
       state.baseUrl = `${state.scheme}://${state.host}${state.basePath}`;
       state.produces = parsed.produces || [];
+
+      if (state.securityDefinitions) {
+        state.hasAuthentication = true;
+      }
 
       if (parsed.tags) {
         state.tags = parsed.tags;
@@ -112,26 +126,42 @@ export default {
   },
 
   actions: {
-    currentTag({ commit }, { name }) {
-      commit('setCurrentTag', { name });
+    tagCurrent({ commit }, { name }) {
+      commit('setTagCurrent', { name });
     },
-    async fetch({ commit, rootState }, { url }) {
-      commit('setFile', url);
-      if (!url) {
+    async fetch({ commit, rootState }, { file }) {
+      commit('setFile', file);
+      if (!file) {
         return;
       }
+      commit('setLoading', true);
 
       try {
-        const parsed = await SwaggerParser.dereference(url);
-        commit('setCurrent', { parsed });
+        if (typeof file === 'string') {
+          file = await fetch(file);
+        }
+
+        const hasError = await SpecMinimumCheck(file);
+        if (hasError) {
+          rootState.error = hasError;
+          commit('setLoading', false);
+          return;
+        }
+        const parsed = await SwaggerParser.dereference(file);
+        const normalized = await SpecNormalizer(parsed);
+
+        commit('setCurrent', { parsed: normalized });
       } catch (e) {
         console.error(e);
         if (process.env.NODE_ENV === 'production') {
-          rootState.error = 'Please excuse the inconvenience';
+          rootState.error = [{ message: 'Please excuse the inconvenience' }];
+        } else if (e.message) {
+          rootState.error = [{ message: e.message }];
         } else {
-          rootState.error = e.message;
+          rootState.error = [{ message: e }];
         }
       }
+      commit('setLoading', false);
     },
   },
 };

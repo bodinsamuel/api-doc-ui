@@ -25,7 +25,7 @@
       <params-list :params="def.parameters" type="formData" class="u-mt60"></params-list>
     </div>
 
-    <div class="u-mt60">
+    <div class="u-mt60" v-if="success">
       <h6 class="subhead u-mb10">Response</h6>
       <response-sample :response="success" :produces="def.produces" :key="def.__path"></response-sample>
     </div>
@@ -94,10 +94,10 @@ export default {
 
     success() {
       if (typeof this.def.responses === 'undefined') {
-        return {};
+        return false;
       }
       if (typeof this.def.responses['200'] === 'undefined') {
-        return {};
+        return false;
       }
 
       return this.def.responses['200'];

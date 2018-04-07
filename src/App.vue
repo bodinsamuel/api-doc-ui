@@ -5,7 +5,8 @@
         <sidebar-view />
         <main>
           <header-view />
-          <router-view />
+          <router-view v-if="!page404" />
+          <page-not-found v-if="page404"/>
         </main>
       </div>
       <global-error v-if="error" />
@@ -30,6 +31,7 @@ import HeaderView from '@/layouts/Header';
 import SidebarView from '@/layouts/Sidebar';
 
 import GlobalError from '@/components/GlobalError';
+import PageNotFound from '@/pages/PageNotFound';
 
 export default {
   name: 'App',
@@ -37,9 +39,11 @@ export default {
     HeaderView,
     SidebarView,
     GlobalError,
+    PageNotFound,
   },
   head() {
     return {
+      title: 'OpenAPI Documentation',
       link: [
         {
           rel: 'stylesheet',
@@ -57,15 +61,17 @@ export default {
   data() {
     return {
       ready: false,
-      loading: false,
     };
   },
   watch: {
     definition() {
       setTimeout(() => {
         this.ready = true;
-        this.loading = false;
       }, 200);
+    },
+    $route() {
+      // We change the 404 back to false so we can continue navigating
+      this.$store.state.page404 = false;
     },
   },
   computed: {
@@ -76,18 +82,23 @@ export default {
       this.load();
       return this.$store.state.Schema.file;
     },
+    loading() {
+      return this.$store.state.Schema.loading;
+    },
     definition() {
       return this.$store.state.Schema.current;
     },
     error() {
       return this.$store.state.error;
     },
+    page404() {
+      return this.$store.state.page404;
+    },
   },
   methods: {
     load() {
       // we display loading only if it's slow
       setTimeout(() => {
-        this.loading = true;
         // because a timeout can happen after the load
         // tricks it by rechecking here
         // I could have stored the timeout but hey ... :D

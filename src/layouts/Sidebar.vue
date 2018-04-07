@@ -12,7 +12,7 @@
     <nav>
       <div class="nav-collection">
         <router-link :to="{ name: 'Home' }" class="nav-item is-main is-home">Home</router-link>
-        <router-link :to="{ name: 'Authentication' }" class="nav-item is-main">Authentication</router-link>
+        <router-link v-if="hasAuthentication" :to="{ name: 'Authentication' }" class="nav-item is-main">Authentication</router-link>
       </div>
 
       <div class="nav-collection">
@@ -46,6 +46,9 @@ export default {
         return this.schema.info['x-logo'].url;
       }
       return LogoBase;
+    },
+    hasAuthentication() {
+      return this.$store.state.Schema.hasAuthentication;
     },
     schema() {
       return this.$store.state.Schema.current;

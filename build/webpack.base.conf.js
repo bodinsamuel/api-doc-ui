@@ -80,6 +80,11 @@ module.exports = {
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]'),
         },
       },
+      {
+        test: /\.yaml$/,
+        include: path.resolve('data'),
+        loader: 'yaml-loader',
+      },
     ],
   },
   node: {

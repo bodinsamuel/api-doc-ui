@@ -51,6 +51,11 @@
 import { mapState } from 'vuex';
 
 export default {
+  head() {
+    return {
+      title: `Authentication - ${this.schema.info.title} Documentation`,
+    };
+  },
   computed: mapState({
     schema: (state) => state.Schema.current,
     host: (state) => state.Schema.host,

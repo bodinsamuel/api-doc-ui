@@ -17,6 +17,12 @@ import MethodsList from '@/components/MethodsList';
 import EndpointBloc from '@/components/EndpointBloc';
 
 export default {
+  head() {
+    const endpoint = this.endpoint;
+    return {
+      title: `${endpoint.path} - ${this.schema.info.title} documentation`,
+    };
+  },
   components: {
     MethodsList,
     EndpointBloc,
@@ -33,6 +39,9 @@ export default {
     });
   },
   computed: {
+    schema() {
+      return this.$store.state.Schema.current;
+    },
     tag() {
       return this.$store.getters['Schema/tagBySlug'](this.$route.params.name);
     },

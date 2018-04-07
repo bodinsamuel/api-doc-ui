@@ -11,5 +11,6 @@ export default new Vuex.Store({
   },
   state: {
     error: false,
+    page404: false,
   },
 });

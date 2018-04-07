@@ -6,6 +6,7 @@ import Home from '@/pages/Home';
 import Authentication from '@/pages/Authentication';
 import Tag from '@/pages/Tag';
 import TagEndpoint from '@/pages/TagEndpoint';
+import PageNotFound from '@/pages/PageNotFound';
 
 Vue.use(Router);
 Vue.use(Meta, {
@@ -33,6 +34,11 @@ const routes = [
     path: '/tag/:name',
     name: 'Tag',
     component: Tag,
+  },
+  {
+    path: '*',
+    name: 'PageNotFound',
+    component: PageNotFound,
   },
 ];
 
