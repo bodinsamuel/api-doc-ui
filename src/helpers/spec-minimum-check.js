@@ -24,7 +24,6 @@ export default async (spec) => {
       returnErrors: true,
     }),
     schemes: Alt.array().min(1),
-    tags: Alt.array().min(1),
     paths: Alt.object(),
   })
     .body(spec)
@@ -32,8 +31,6 @@ export default async (spec) => {
       required: true,
     })
     .validate();
-
-  console.log(spec);
 
   return hasError;
 };

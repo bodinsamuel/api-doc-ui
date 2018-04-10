@@ -35,7 +35,7 @@ export default {
       return this.$store.state.Schema.produces;
     },
     mergedProduces() {
-      if (!this.produces) {
+      if (!this.produces || this.produces.length <= 0) {
         return this.globalProduces;
       }
 
@@ -52,6 +52,9 @@ export default {
 
       // build response with schema
       if (this.response.schema) {
+        if (this.response.schema.example) {
+          return this.response.schema.example;
+        }
         if (canJson) {
           return this.getJson();
         } else if (canXml) {

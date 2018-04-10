@@ -15,7 +15,7 @@ export default {
     baseUrl: null,
     scheme: 'https',
     hasAuthentication: false,
-    tags: [],
+    tags: [{ name: 'global', description: '', __slug: 'global' }],
     tagCurrent: null,
     endpoints: [],
     endpointsGrouped: [],
@@ -35,9 +35,16 @@ export default {
         );
       };
     },
-    endpointBySlug(state) {
+    endpointGroupedBySlug(state) {
       return (name) => {
-        return state.endpointsGrouped[name];
+        return state.endpointsGrouped.find((group) => group.slug === name);
+      };
+    },
+    endpointGroupedByTag(state) {
+      return (name) => {
+        return state.endpointsGrouped.filter(
+          (endpoint) => endpoint.tag === name
+        );
       };
     },
   },
@@ -67,7 +74,7 @@ export default {
       }
 
       if (parsed.tags) {
-        state.tags = parsed.tags;
+        state.tags = state.tags.concat(parsed.tags);
         state.tags.forEach((tag) => {
           tag.__slug = slugify(tag.name, { lower: true });
         });
@@ -77,6 +84,7 @@ export default {
       if (parsed.paths) {
         const endpoints = [];
         const grouped = {};
+        const tags = [].concat(state.tags);
         for (let path in parsed.paths) {
           for (let verb in parsed.paths[path]) {
             const final = parsed.paths[path][verb];
@@ -91,11 +99,18 @@ export default {
               final.tags.length > 0 &&
               !state.tags.find((tag) => tag.name === final.tags[0])
             ) {
-              state.tags.push({
+              tags.push({
                 name: final.tags[0],
                 description: '',
                 __slug: slugify(final.tags[0], { lower: true }),
               });
+            }
+            if (!final.tags || final.tags.length > 0) {
+              final.tags = [
+                {
+                  name: 'global',
+                },
+              ];
             }
 
             // Move description to summary if possible/needed
@@ -113,14 +128,24 @@ export default {
               grouped[final.__slug] = {
                 slug: final.__slug,
                 path: final.__path,
+                tag: final.tags[0].name,
                 endpoints: [],
               };
             }
             grouped[final.__slug].endpoints.push(final);
           }
         }
+
         state.endpoints = endpoints;
-        state.endpointsGrouped = grouped;
+        state.endpointsGrouped = Object.values(grouped).sort((a, b) => {
+          if (a.path > b.path) {
+            return 1;
+          } else if (a.path < b.path) {
+            return -1;
+          }
+          return 0;
+        });
+        state.tags = tags;
       }
     },
   },

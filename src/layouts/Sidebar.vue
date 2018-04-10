@@ -18,13 +18,18 @@
       <div class="nav-collection">
         <div class="nav-header">Endpoints</div>
         <div class="nav-children">
-          <div v-for="(tag, key) in tags" :key="key">
+          <div v-for="(tag, key) in tags" :key="key" v-if="tag.name !== 'global'">
             <router-link  :to="{ name: 'Tag', params: { name: tag.__slug }}" class="nav-item">{{ tag.name }}</router-link>
             <div v-if="((currentRoute.name === 'TagEndpoint' || currentRoute.name === 'Tag') && currentRoute.params.name === tag.__slug) && tagEndpoint && tagEndpoint.length > 0" class="nav-children u-pb20">
               <router-link v-for="(endpoint, key) in tagEndpoint" :key="key" :to="{ name: 'TagEndpoint', params: { name: tag.__slug, endpoint: endpoint.slug  }}" class="nav-item" :title="endpoint.path">{{ endpoint.path }}</router-link>
             </div>
           </div>
         </div>
+
+        <div v-if="tagGlobal" class="nav-children u-pb20">
+          <router-link v-for="(endpoint, key) in tagGlobal" :key="key" :to="{ name: 'TagEndpoint', params: { name: 'global', endpoint: endpoint.slug  }}" class="nav-item" :title="endpoint.__path">{{ endpoint.path }}</router-link>
+        </div>
+
       </div>
     </nav>
   </aside>
@@ -53,6 +58,9 @@ export default {
     },
     tags() {
       return this.$store.state.Schema.tags;
+    },
+    tagGlobal() {
+      return this.$store.getters['Schema/endpointGroupedByTag']('global');
     },
     tagEndpoint() {
       if (!this.$store.state.Schema.tagCurrent) {

@@ -28,13 +28,13 @@ export default {
     EndpointBloc,
   },
   beforeRouteUpdate(to, from, next) {
-    this.$store.dispatch('Schema/currentTag', {
+    this.$store.dispatch('Schema/tagCurrent', {
       name: to.params.name,
     });
     next();
   },
   created() {
-    this.$store.dispatch('Schema/currentTag', {
+    this.$store.dispatch('Schema/tagCurrent', {
       name: this.$route.params.name,
     });
   },
@@ -46,7 +46,7 @@ export default {
       return this.$store.getters['Schema/tagBySlug'](this.$route.params.name);
     },
     endpoint() {
-      return this.$store.getters['Schema/endpointBySlug'](
+      return this.$store.getters['Schema/endpointGroupedBySlug'](
         this.$route.params.endpoint
       );
     },
