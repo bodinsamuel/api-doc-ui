@@ -74,73 +74,38 @@ export default {
       }
 
       // Normalizing paths
-      if (parsed.paths) {
-        const endpoints = [];
-        const grouped = {};
-        const tags = [].concat(state.tags);
-        for (let path in parsed.paths) {
-          for (let verb in parsed.paths[path]) {
-            const final = parsed.paths[path][verb];
-            final.__verb = verb;
-            final.__path = path;
-            final.__slug = slugify(path, { lower: true });
-            endpoints.push(final);
+      const endpoints = [];
+      const grouped = {};
+      const tags = [].concat(state.tags);
+      for (let path in parsed.paths) {
+        for (let verb in parsed.paths[path]) {
+          const final = parsed.paths[path][verb];
+          endpoints.push(final);
 
-            // If a path is tagged but tag has no global definition we push it
-            if (
-              final.tags &&
-              final.tags.length > 0 &&
-              !state.tags.find((tag) => tag.name === final.tags[0])
-            ) {
-              tags.push({
-                name: final.tags[0],
-                description: '',
-                __slug: slugify(final.tags[0], { lower: true }),
-              });
-            }
-            if (!final.tags || final.tags.length <= 0) {
-              final.tags = [
-                {
-                  name: 'global',
-                },
-              ];
-            }
-
-            // Move description to summary if possible/needed
-            if (
-              !final.summary &&
-              final.description &&
-              final.description.length <= 75
-            ) {
-              final.summary = final.description;
-              final.description = null;
-            }
-
-            // Prepare group
-            if (typeof grouped[final.__slug] === 'undefined') {
-              grouped[final.__slug] = {
-                slug: final.__slug,
-                path: final.__path,
-                tag: final.tags[0],
-                endpoints: [],
-              };
-            }
-
-            grouped[final.__slug].endpoints.push(final);
+          // Prepare group
+          if (typeof grouped[final.__slug] === 'undefined') {
+            grouped[final.__slug] = {
+              slug: final.__slug,
+              path: final.__path,
+              tag: final.tags[0],
+              endpoints: [],
+            };
           }
+
+          grouped[final.__slug].endpoints.push(final);
         }
-
-        state.endpoints = endpoints;
-        state.endpointsGrouped = Object.values(grouped).sort((a, b) => {
-          if (a.path > b.path) {
-            return 1;
-          } else if (a.path < b.path) {
-            return -1;
-          }
-          return 0;
-        });
-        state.tags = tags;
       }
+
+      state.endpoints = endpoints;
+      state.endpointsGrouped = Object.values(grouped).sort((a, b) => {
+        if (a.path > b.path) {
+          return 1;
+        } else if (a.path < b.path) {
+          return -1;
+        }
+        return 0;
+      });
+      state.tags = tags;
     },
   },
 

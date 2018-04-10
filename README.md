@@ -14,16 +14,16 @@ You can check our [live example](https://bodinsamuel.github.io/openapi-doc-gener
 
 # Todo
 - [ ] Metadata (title, description, logo...)
-- [ ] Schema normalization + minimum required information notice
 - [ ] Schema Request display
 - [ ] Schema Response display
+- [ ] Error Schema Response display
 - [ ] Custom markdown 
-- [ ] Console for testing
+- [ ] web Console for testing
 - [ ] Server Side Rendering
 - [ ] Library build + versionning
 - [ ] 404 on bad url
-- [ ] quick switch for demo purpose
-- [ ] authentication menu disabling if no securityDef
+- [ ] redirect/404 on bad slug
+- [ ] input quick switch for demo purpose
 - [ ] Sidebar responsivness
 - [ ] Search
 
