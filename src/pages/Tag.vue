@@ -9,9 +9,9 @@
     </div>
     <div class="u-mt40">
       <!-- <h3>Endpoints</h3> -->
-      <div v-for="(group, path) in endpointsGrouped" :key="path" class="bloc u-mt30 ">
+      <div v-for="(group, key) in endpointsGrouped" :key="key" class="bloc u-mt30 ">
         <h4 class="u-txt-bold u-pb10">
-          <router-link :to="{ name: 'TagEndpoint', params: { name: tag.__slug, endpoint: group.slug } }">{{ path }}</router-link>
+          <router-link :to="{ name: 'TagEndpoint', params: { name: tag.__slug, endpoint: group.slug } }">{{ group.path }}</router-link>
         </h4>
         <methods-list :methods="group.endpoints"></methods-list>
       </div>
@@ -69,21 +69,9 @@ export default {
       return this.$store.state.Schema.tagCurrent;
     },
     endpointsGrouped() {
-      const endpoints = this.$store.getters['Schema/endpointsByTag'](
-        this.tag.name
+      return this.$store.getters['Schema/endpointGroupedByTag'](
+        this.$store.state.Schema.tagCurrent.name
       );
-      const grouped = {};
-      // Group by endpoint url path
-      endpoints.map((endpoint) => {
-        if (typeof grouped[endpoint.__path] === 'undefined') {
-          grouped[endpoint.__path] = {
-            slug: slugify(endpoint.__path, { lower: true }),
-            endpoints: [],
-          };
-        }
-        grouped[endpoint.__path].endpoints.push(endpoint);
-      });
-      return grouped;
     },
   },
 };

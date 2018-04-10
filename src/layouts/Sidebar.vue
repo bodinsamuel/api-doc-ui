@@ -20,14 +20,20 @@
         <div class="nav-children">
           <div v-for="(tag, key) in tags" :key="key" v-if="tag.name !== 'global'">
             <router-link  :to="{ name: 'Tag', params: { name: tag.__slug }}" class="nav-item">{{ tag.name }}</router-link>
-            <div v-if="((currentRoute.name === 'TagEndpoint' || currentRoute.name === 'Tag') && currentRoute.params.name === tag.__slug) && tagEndpoint && tagEndpoint.length > 0" class="nav-children u-pb20">
-              <router-link v-for="(endpoint, key) in tagEndpoint" :key="key" :to="{ name: 'TagEndpoint', params: { name: tag.__slug, endpoint: endpoint.slug  }}" class="nav-item" :title="endpoint.path">{{ endpoint.path }}</router-link>
+
+            <div v-if="((currentRoute.name === 'TagEndpoint' || currentRoute.name === 'Tag') && currentRoute.params.name === tag.__slug) && tagEndpoint && tagEndpoint.length > 0"
+              class="nav-children u-pb20">
+              <router-link v-for="(endpoint, key) in tagEndpoint" :key="key"
+                :to="{ name: 'TagEndpoint', params: { name: tag.__slug, endpoint: endpoint.slug  }}"
+                :title="endpoint.path"
+                class="nav-item is-path">{{ endpoint.path }}</router-link>
             </div>
+
           </div>
         </div>
 
         <div v-if="tagGlobal" class="nav-children u-pb20">
-          <router-link v-for="(endpoint, key) in tagGlobal" :key="key" :to="{ name: 'TagEndpoint', params: { name: 'global', endpoint: endpoint.slug  }}" class="nav-item" :title="endpoint.__path">{{ endpoint.path }}</router-link>
+          <router-link v-for="(endpoint, key) in tagGlobal" :key="key" :to="{ name: 'TagEndpoint', params: { name: 'global', endpoint: endpoint.slug  }}" class="nav-item is-path" :title="endpoint.__path">{{ endpoint.path }}</router-link>
         </div>
 
       </div>
@@ -67,22 +73,10 @@ export default {
         return;
       }
 
-      const endpoints = this.$store.getters['Schema/endpointsByTag'](
+      const tag = this.$store.getters['Schema/endpointGroupedByTag'](
         this.$store.state.Schema.tagCurrent.name
       );
-      const group = {};
-
-      // Group by endpoint url path
-      endpoints.map((endpoint) => {
-        if (typeof group[endpoint.__path] !== 'undefined') {
-          return;
-        }
-        group[endpoint.__path] = {
-          slug: endpoint.__slug,
-          path: endpoint.__path,
-        };
-      });
-      return Object.values(group);
+      return tag;
     },
   },
 };
@@ -101,6 +95,7 @@ export default {
     margin: 20px 25px;
     transition: margin 0.3s ease-in-out, min-width 0.3s ease-in-out;
     justify-content: flex-start;
+    min-width: 100%;
     &.is-big {
       margin: 20px 50px 40px 40px;
       min-width: 100vw;
@@ -158,6 +153,23 @@ export default {
     &.router-link-exact-active {
       font-weight: 600;
       color: $color-base;
+    }
+    &.is-path {
+      font-size: $font-size-xs;
+      &.router-link-exact-active {
+        font-weight: 600;
+        color: $color-base;
+        &:before {
+          content: ' ';
+          border-radius: 50%;
+          background-color: $color-blue-light;
+          display: inline-block;
+          height: 6px;
+          width: 6px;
+          vertical-align: middle;
+          margin: -5px 5px 0 0;
+        }
+      }
     }
     &.is-main {
       font-size: $font-size-s;

@@ -28,13 +28,6 @@ export default {
         return state.tags.find((tag) => tag.__slug === name);
       };
     },
-    endpointsByTag(state) {
-      return (name) => {
-        return state.endpoints.filter(
-          (endpoint) => endpoint.tags && endpoint.tags.includes(name)
-        );
-      };
-    },
     endpointGroupedBySlug(state) {
       return (name) => {
         return state.endpointsGrouped.find((group) => group.slug === name);
@@ -105,7 +98,7 @@ export default {
                 __slug: slugify(final.tags[0], { lower: true }),
               });
             }
-            if (!final.tags || final.tags.length > 0) {
+            if (!final.tags || final.tags.length <= 0) {
               final.tags = [
                 {
                   name: 'global',
@@ -128,10 +121,11 @@ export default {
               grouped[final.__slug] = {
                 slug: final.__slug,
                 path: final.__path,
-                tag: final.tags[0].name,
+                tag: final.tags[0],
                 endpoints: [],
               };
             }
+
             grouped[final.__slug].endpoints.push(final);
           }
         }

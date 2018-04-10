@@ -30,6 +30,8 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
+  x-logo:
+    url: 'https://rebilly.github.io/ReDoc/petstore-logo.png'
 host: petstore.swagger.io
 basePath: "/v2"
 tags:
