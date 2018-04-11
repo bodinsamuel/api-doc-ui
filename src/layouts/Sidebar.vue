@@ -1,6 +1,5 @@
 <template>
   <aside class="sidebar" v-if="schema" :class="{ 'is-open': menu }">
-    <div class="click-trigger" @click="clickTrigger" v-if="menu"></div>
     <div class="inner">
       <div class="brand" :class="{ 'is-big': currentRoute.name === 'Home' && screen === 'desktop' }">
         <img :src="logo" alt="logo" class="logo" />
@@ -86,11 +85,6 @@ export default {
         this.$store.state.Schema.tagCurrent.name
       );
       return tag;
-    },
-  },
-  methods: {
-    clickTrigger() {
-      this.$store.commit('toggleMenu', 'close');
     },
   },
 };
@@ -198,23 +192,18 @@ export default {
     position: absolute;
     height: 100vh;
     background: white;
-    box-shadow: 0 0 92px 10px rgba(0, 0, 0, 0.2);
     padding: 0 10px 0 0;
     transform: translate3d(-100%, 0, 0);
+    box-shadow: none;
     transition: transform 0.3s ease-out;
     z-index: 1;
     &.is-open {
       transform: translate3d(0, 0, 0);
+      box-shadow: 0 0 92px 10px rgba(0, 0, 0, 0.2);
     }
     .inner {
       position: relative;
       z-index: 1;
-    }
-    .click-trigger {
-      position: absolute;
-      z-index: 1;
-      width: 100vw;
-      height: 100vh;
     }
   }
 }

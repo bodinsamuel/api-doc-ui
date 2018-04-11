@@ -2,6 +2,8 @@
   <div id="app" :class="classes">
     <transition name="fade-in">
       <div v-if="ready && !error" class="main">
+
+        <div class="click-trigger" :class="{ 'show': menu }" @click="clickTrigger"></div>
         <sidebar-view />
 
         <main class="content">
@@ -61,6 +63,9 @@ export default {
             'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/atom-one-light.min.css',
         },
       ],
+      bodyAttrs: {
+        class: this.menu ? 'scroll-lock' : '',
+      },
     };
   },
   data() {
@@ -105,6 +110,9 @@ export default {
     screen() {
       return this.$store.state.screen;
     },
+    menu() {
+      return this.$store.state.menu;
+    },
     definition() {
       return this.$store.state.Schema.current;
     },
@@ -127,6 +135,9 @@ export default {
         }
       }, 300);
     },
+    clickTrigger() {
+      this.$store.commit('toggleMenu', 'close');
+    },
   },
 };
 </script>
@@ -134,24 +145,18 @@ export default {
 <style lang="scss">
 @import '~@/styles/vars.scss';
 
-#app {
-  font: $font-stack2;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: left;
-  color: $color-base;
-  background: #f4f7fa;
-  min-height: 100vh;
-}
-.main {
-  display: grid;
-  grid-template-columns: 250px auto;
-  min-height: 100vh;
-  min-width: $bp-xs - 200px;
-}
 @media (max-width: $bp-md) {
-  .main {
-    display: block;
+  .click-trigger {
+    position: absolute;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    transition: background-color 0.3s ease-in-out;
+    pointer-events: none;
+    &.show {
+      background-color: rgba(0, 0, 0, 0.5);
+      pointer-events: all;
+    }
   }
 }
 
