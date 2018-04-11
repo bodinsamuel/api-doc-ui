@@ -1,0 +1,17 @@
+---
+swagger: '2.0'
+info:
+  description: Hello world
+  title: Minimal Spec
+  version: 1.0.0
+  x-logo:
+    url: 'https://rebilly.github.io/ReDoc/petstore-logo.png'
+host: petstore.swagger.io
+basePath: '/v2'
+tags:
+- name: pet
+  description: Everything about your Pets
+schemes:
+- https
+paths:
+  "/pet":

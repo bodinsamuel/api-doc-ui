@@ -1,0 +1,411 @@
+#%RAML 1.0
+---
+title: HERVOT Back-end
+version: v1
+mediaType: application/json
+baseUri: https://api.hervot.fr.clara.net/{version}
+
+/about:
+  get:
+    description: return API version
+    responses:
+      200:
+        headers:
+          Access-Control-Allow-Origin:
+            example: "*"
+        body:
+          application/json:
+            example:
+              {
+                "version" : "1.0.0-SNAPSHOT"
+              }
+
+/menus:
+  get:
+    description: list of available menus
+
+    responses:
+        200:
+          headers:
+            Access-Control-Allow-Origin:
+              example: "*"
+          body:
+            application/json:
+              example: |
+                [
+                  {
+                    "menuId": "1",
+                    "openDate" : "2017-12-05T10:00:00+0100",
+                    "createdAt" : "2017-12-05T10:00:00+0100",
+                    "updatedAt" : "2017-12-05T10:00:00+0100",
+                    "expirationDate" : "2017-12-05T10:00:00+0100",
+                    "deliveryDate" : "2017-12-05T10:00:00+0100",
+                    "title" : "Menu du 5 décembre 2017"
+                  },
+                  {
+                    "menuId": "2",
+                    "openDate" : "2017-12-05T10:00:00+0100",
+                    "createdAt" : "2017-12-05T10:00:00+0100",
+                    "updatedAt" : "2017-12-05T10:00:00+0100",
+                    "expirationDate" : "2017-12-05T10:00:00+0100",
+                    "deliveryDate" : "2017-12-05T10:00:00+0100",
+                    "title" : "Menu de Noël 2017"
+                  }
+                ]
+  post:
+     description: create a new menu
+     responses:
+        201:
+          headers:
+            Access-Control-Allow-Origin:
+              example: "*"
+          body:
+            application/json:
+              example: |
+                {
+                "menuId": "1",
+                "openDate" : "2017-12-05T10:00:00+0100",
+                "createdAt" : "2017-12-05T10:00:00+0100",
+                "updatedAt" : "2017-12-05T10:00:00+0100",
+                "expirationDate" : "2017-12-05T10:00:00+0100",
+                "deliveryDate" : "2017-12-05T10:00:00+0100",
+                "title" : "Menu du 5 décembre 2017"
+                }
+  /{menuId}:
+    description: Menu entity
+    get:
+      description: get a menu with `menuId = {menuId}`
+      responses:
+        200:
+          headers:
+            Access-Control-Allow-Origin:
+              example: "*"
+          body:
+            application/json:
+              example: |
+                {
+                  "menuId": "1",
+                  "openDate" : "2017-12-05T10:00:00+0100",
+                  "createdAt" : "2017-12-05T10:00:00+0100",
+                  "updatedAt" : "2017-12-05T10:00:00+0100",
+                  "expirationDate" : "2017-12-05T10:00:00+0100",
+                  "deliveryDate" : "2017-12-05T10:00:00+0100",
+                  "title" : "Menu du 5 décembre 2017",
+                  "foodstuffs": [
+                    {
+                      "foodstuffsId": 1,
+                      "name": "boeuf carottes",
+                      "price": 4,
+                      "quantity" : 10,
+                      "categoryId" : 1,
+                      "categoryName" : "plat"
+                    },
+                    {
+                      "foodstuffsId": 2,
+                      "name": "Porc au caramel",
+                      "price": 3.5,
+                      "quantity" : 5,
+                      "categoryId" : 1,
+                      "categoryName" : "plat"
+                    },
+                    {
+                      "foodstuffsId": 3,
+                      "name": "Carottes rapées",
+                      "quantity" : -1,
+                      "price": 1.5,
+                      "categoryId" : 2,
+                      "categoryName" : "entrées"
+                    }
+                    ]
+                }
+        404:
+          headers:
+            Access-Control-Allow-Origin:
+              example: "*"
+          body:
+            application/json:
+              example: |
+                {"message": "Menu not found"}
+    patch:
+      description: update a menu
+      responses:
+              200:
+                headers:
+                  Access-Control-Allow-Origin:
+                    example: "*"
+              204:
+                headers:
+                  Access-Control-Allow-Origin:
+                    example: "*"
+              403:
+                headers:
+                  Access-Control-Allow-Origin:
+                    example: "*"
+              404:
+                headers:
+                  Access-Control-Allow-Origin:
+                    example: "*"
+    delete:
+      description: remove a menu
+      responses:
+              204:
+                headers:
+                  Access-Control-Allow-Origin:
+                    example: "*"
+              403:
+                headers:
+                  Access-Control-Allow-Origin:
+                    example: "*"
+              404:
+                headers:
+                  Access-Control-Allow-Origin:
+                    example: "*"
+    /orders:
+      get:
+        description: get all orders
+        responses:
+          200:
+            headers:
+              Access-Control-Allow-Origin:
+                example: "*"
+            body:
+              application/json:
+                example: |
+                  {
+                    "orders": [
+                      {
+                        "orderId" : 1,
+                        "price" : 9.50,
+                        "menuId" : 1,
+                        "payments" : [
+                          {
+                            "paymentId" : 1,
+                            "paymentTitle" : "TR",
+                            "amount" : 9.20
+                          },
+                          {
+                            "paymentId" : 2,
+                            "paymentTitle" : "Liquide",
+                            "amount" : 0.30
+                          }
+                        ],
+                        "foodstuffs" : [
+                          {
+                          },
+                          {
+                          }
+                        ]
+                      },
+                      {
+                      }
+                    ]
+                  }
+
+/categories:
+  description: food categories
+  get:
+    description: get categories
+    responses:
+          200:
+            headers:
+              Access-Control-Allow-Origin:
+                example: "*"
+            body:
+              application/json:
+                example: |
+                  {
+                    "categories" : [
+                      {
+                        "categoryId" : 1,
+                        "categoryName" : "Plat"
+                      },
+                      {
+                        "categoryId" : 2,
+                        "categoryName" : "Entrée"
+                      }
+                    ]
+                  }
+
+  post:
+    description: create a category
+  /{categoryId}:
+    get:
+      description: get a specific category
+      responses:
+          200:
+            headers:
+              Access-Control-Allow-Origin:
+                example: "*"
+            body:
+              application/json:
+                example: |
+                  {
+                    "categoryId" : 1,
+                    "categoryName" : "Plat",
+                    "foodstuffs" : [
+                      {
+                      },
+                      {
+                      }
+                    ]
+                  }
+    patch:
+      description: update a category
+    delete:
+      description: delete a category
+
+/foodstuffs:
+  get:
+    description: get foodstuffs
+    responses:
+        200:
+          headers:
+            Access-Control-Allow-Origin:
+              example: "*"
+          body:
+            application/json:
+              example: |
+                {
+                  "foodstuffs": [
+                    {
+                      "foodstuffsId": 1,
+                      "name": "boeuf carottes",
+                      "price": 4,
+                      "categoryId" : 1,
+                      "categoryName" : "plat"
+                    },
+                    {
+                      "foodstuffsId": 2,
+                      "name": "Porc au caramel",
+                      "price": 3.5,
+                      "categoryId" : 1,
+                      "categoryName" : "plat"
+                    },
+                    {
+                      "foodstuffsId": 3,
+                      "name": "Carottes rapées",
+                      "price": 1.5,
+                      "categoryId" : 2,
+                      "categoryName" : "entrées"
+                    }
+                    ]
+                }
+  post:
+    description: create a foodstuff
+  /{foodstuffId}:
+    get:
+      description: get a specific foodstuff
+      responses:
+            200:
+              headers:
+                Access-Control-Allow-Origin:
+                  example: "*"
+              body:
+                application/json:
+                  example: |
+                    {
+                      "foodstuffsId": 1,
+                      "name": "boeuf carottes",
+                      "price": 4,
+                      "categoryId" : 1,
+                      "categoryName" : "plat"
+                    }
+
+    patch:
+      description: update a foodstuff
+    delete:
+      description: delete a foodstuff
+
+/configurations:
+  description: the API configuration
+  get:
+    description: get configurations
+  post:
+    description: create new configuration
+  /{configurationId}:
+    get:
+      description: get a configuration
+    put:
+      description: update a configuration
+    delete:
+      description: delate a configuration
+
+/users:
+  get:
+    description: get all users
+    responses:
+        200:
+          headers:
+            Access-Control-Allow-Origin:
+              example: "*"
+          body:
+            application/json:
+              example: |
+                {
+                  "users" : [
+                    {
+                      "userId" : 1,
+                      "firstname" : "John",
+                      "lastname" : "Doe",
+                      "email" : "john.doe@fr.clara.net",
+                      "is-admin" : false,
+                      "is-local" : true,
+                      "last-accessed-at": null
+                    },
+                    {
+                      "userId" : 2,
+                      "userName" : "",
+                      "firstname" : "John",
+                      "lastname" : "Doe",
+                      "email" : "john.doe@fr.clara.net",
+                      "is-admin" : true,
+                      "is-local" : true,
+                      "last-accessed-at": null
+                    }
+                  ]
+                }
+  post:
+    description: create a new temporary user account
+  /login:
+    post:
+      description: user authentication
+  /{userId}:
+    get:
+      description: get user information
+    put:
+      description: update user account
+    delete:
+      description: delete user account
+    /loyalty:
+      get:
+        description: get user loyalty information
+      put:
+        description: update user loyalty information
+    /cart:
+      get:
+        description: get the cart
+      put:
+        description: update the cart
+    /orders:
+      get:
+        description: get user orders
+      post:
+        description: create new order
+      /{orderId}:
+        get:
+          description: get order information
+        delete:
+          description: delete order
+
+/roles:
+  get:
+  post:
+  /{roleId}:
+    get:
+    post:
+    delete:
+
+/abilities:
+  get:
+  /{abilityId}:
+    get:

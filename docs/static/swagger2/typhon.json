@@ -1,0 +1,849 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "HERVOT Back-end",
+    "version": "v1",
+    "description": "",
+    "x-logo": {
+      "url": "https://www.claranet.fr/sites/all/themes/claranet_responsive_2015/logo.png"
+    }
+  },
+  "host": "api.hervot.fr.clara.net",
+  "x-basePath": "/{version}",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/about": {
+      "get": {
+        "description": "return API version",
+        "operationId": "GET_about",
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            },
+            "schema": {
+              "example": {
+                "version": "1.0.0-SNAPSHOT"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/menus": {
+      "get": {
+        "description": "list of available menus",
+        "operationId": "GET_menus",
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            },
+            "schema": {
+              "example": [
+                {
+                  "menuId": "1",
+                  "openDate": "2017-12-05T10:00:00+0100",
+                  "createdAt": "2017-12-05T10:00:00+0100",
+                  "updatedAt": "2017-12-05T10:00:00+0100",
+                  "expirationDate": "2017-12-05T10:00:00+0100",
+                  "deliveryDate": "2017-12-05T10:00:00+0100",
+                  "title": "Menu du 5 décembre 2017"
+                },
+                {
+                  "menuId": "2",
+                  "openDate": "2017-12-05T10:00:00+0100",
+                  "createdAt": "2017-12-05T10:00:00+0100",
+                  "updatedAt": "2017-12-05T10:00:00+0100",
+                  "expirationDate": "2017-12-05T10:00:00+0100",
+                  "deliveryDate": "2017-12-05T10:00:00+0100",
+                  "title": "Menu de Noël 2017"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "create a new menu",
+        "operationId": "POST_menus",
+        "responses": {
+          "201": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            },
+            "schema": {
+              "example": {
+                "menuId": "1",
+                "openDate": "2017-12-05T10:00:00+0100",
+                "createdAt": "2017-12-05T10:00:00+0100",
+                "updatedAt": "2017-12-05T10:00:00+0100",
+                "expirationDate": "2017-12-05T10:00:00+0100",
+                "deliveryDate": "2017-12-05T10:00:00+0100",
+                "title": "Menu du 5 décembre 2017"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/menus/{menuId}": {
+      "get": {
+        "description": "get a menu with `menuId = {menuId}`",
+        "operationId": "GET_menus-menuId",
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            },
+            "schema": {
+              "example": {
+                "menuId": "1",
+                "openDate": "2017-12-05T10:00:00+0100",
+                "createdAt": "2017-12-05T10:00:00+0100",
+                "updatedAt": "2017-12-05T10:00:00+0100",
+                "expirationDate": "2017-12-05T10:00:00+0100",
+                "deliveryDate": "2017-12-05T10:00:00+0100",
+                "title": "Menu du 5 décembre 2017",
+                "foodstuffs": [
+                  {
+                    "foodstuffsId": 1,
+                    "name": "boeuf carottes",
+                    "price": 4,
+                    "quantity": 10,
+                    "categoryId": 1,
+                    "categoryName": "plat"
+                  },
+                  {
+                    "foodstuffsId": 2,
+                    "name": "Porc au caramel",
+                    "price": 3.5,
+                    "quantity": 5,
+                    "categoryId": 1,
+                    "categoryName": "plat"
+                  },
+                  {
+                    "foodstuffsId": 3,
+                    "name": "Carottes rapées",
+                    "quantity": -1,
+                    "price": 1.5,
+                    "categoryId": 2,
+                    "categoryName": "entrées"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            },
+            "schema": {
+              "example": {
+                "message": "Menu not found"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "update a menu",
+        "operationId": "PATCH_menus-menuId",
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "204": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "remove a menu",
+        "operationId": "DELETE_menus-menuId",
+        "responses": {
+          "204": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "in": "path",
+          "name": "menuId",
+          "required": true
+        }
+      ]
+    },
+    "/menus/{menuId}/orders": {
+      "get": {
+        "description": "get all orders",
+        "operationId": "GET_menus-menuId-orders",
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            },
+            "schema": {
+              "example": {
+                "orders": [
+                  {
+                    "orderId": 1,
+                    "price": 9.5,
+                    "menuId": 1,
+                    "payments": [
+                      {
+                        "paymentId": 1,
+                        "paymentTitle": "TR",
+                        "amount": 9.2
+                      },
+                      {
+                        "paymentId": 2,
+                        "paymentTitle": "Liquide",
+                        "amount": 0.3
+                      }
+                    ],
+                    "foodstuffs": [
+                      {},
+                      {}
+                    ]
+                  },
+                  {}
+                ]
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "in": "path",
+          "name": "menuId",
+          "required": true
+        }
+      ]
+    },
+    "/categories": {
+      "get": {
+        "description": "get categories",
+        "operationId": "GET_categories",
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            },
+            "schema": {
+              "example": {
+                "categories": [
+                  {
+                    "categoryId": 1,
+                    "categoryName": "Plat"
+                  },
+                  {
+                    "categoryId": 2,
+                    "categoryName": "Entrée"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "create a category",
+        "operationId": "POST_categories",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/categories/{categoryId}": {
+      "get": {
+        "description": "get a specific category",
+        "operationId": "GET_categories-categoryId",
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            },
+            "schema": {
+              "example": {
+                "categoryId": 1,
+                "categoryName": "Plat",
+                "foodstuffs": [
+                  {},
+                  {}
+                ]
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "update a category",
+        "operationId": "PATCH_categories-categoryId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "delete a category",
+        "operationId": "DELETE_categories-categoryId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "in": "path",
+          "name": "categoryId",
+          "required": true
+        }
+      ]
+    },
+    "/foodstuffs": {
+      "get": {
+        "description": "get foodstuffs",
+        "operationId": "GET_foodstuffs",
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            },
+            "schema": {
+              "example": {
+                "foodstuffs": [
+                  {
+                    "foodstuffsId": 1,
+                    "name": "boeuf carottes",
+                    "price": 4,
+                    "categoryId": 1,
+                    "categoryName": "plat"
+                  },
+                  {
+                    "foodstuffsId": 2,
+                    "name": "Porc au caramel",
+                    "price": 3.5,
+                    "categoryId": 1,
+                    "categoryName": "plat"
+                  },
+                  {
+                    "foodstuffsId": 3,
+                    "name": "Carottes rapées",
+                    "price": 1.5,
+                    "categoryId": 2,
+                    "categoryName": "entrées"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "create a foodstuff",
+        "operationId": "POST_foodstuffs",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/foodstuffs/{foodstuffId}": {
+      "get": {
+        "description": "get a specific foodstuff",
+        "operationId": "GET_foodstuffs-foodstuffId",
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            },
+            "schema": {
+              "example": {
+                "foodstuffsId": 1,
+                "name": "boeuf carottes",
+                "price": 4,
+                "categoryId": 1,
+                "categoryName": "plat"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "description": "update a foodstuff",
+        "operationId": "PATCH_foodstuffs-foodstuffId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "delete a foodstuff",
+        "operationId": "DELETE_foodstuffs-foodstuffId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "in": "path",
+          "name": "foodstuffId",
+          "required": true
+        }
+      ]
+    },
+    "/configurations": {
+      "get": {
+        "description": "get configurations",
+        "operationId": "GET_configurations",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "description": "create new configuration",
+        "operationId": "POST_configurations",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/configurations/{configurationId}": {
+      "get": {
+        "description": "get a configuration",
+        "operationId": "GET_configurations-configurationId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "description": "update a configuration",
+        "operationId": "PUT_configurations-configurationId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "delate a configuration",
+        "operationId": "DELETE_configurations-configurationId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "in": "path",
+          "name": "configurationId",
+          "required": true
+        }
+      ]
+    },
+    "/users": {
+      "get": {
+        "description": "get all users",
+        "operationId": "GET_users",
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            },
+            "schema": {
+              "example": {
+                "users": [
+                  {
+                    "userId": 1,
+                    "firstname": "John",
+                    "lastname": "Doe",
+                    "email": "john.doe@fr.clara.net",
+                    "is-admin": false,
+                    "is-local": true,
+                    "last-accessed-at": null
+                  },
+                  {
+                    "userId": 2,
+                    "userName": "",
+                    "firstname": "John",
+                    "lastname": "Doe",
+                    "email": "john.doe@fr.clara.net",
+                    "is-admin": true,
+                    "is-local": true,
+                    "last-accessed-at": null
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "create a new temporary user account",
+        "operationId": "POST_users",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "description": "user authentication",
+        "operationId": "POST_users-login",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "description": "get user information",
+        "operationId": "GET_users-userId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "description": "update user account",
+        "operationId": "PUT_users-userId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "delete user account",
+        "operationId": "DELETE_users-userId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "in": "path",
+          "name": "userId",
+          "required": true
+        }
+      ]
+    },
+    "/users/{userId}/loyalty": {
+      "get": {
+        "description": "get user loyalty information",
+        "operationId": "GET_users-userId-loyalty",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "description": "update user loyalty information",
+        "operationId": "PUT_users-userId-loyalty",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "in": "path",
+          "name": "userId",
+          "required": true
+        }
+      ]
+    },
+    "/users/{userId}/cart": {
+      "get": {
+        "description": "get the cart",
+        "operationId": "GET_users-userId-cart",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "description": "update the cart",
+        "operationId": "PUT_users-userId-cart",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "in": "path",
+          "name": "userId",
+          "required": true
+        }
+      ]
+    },
+    "/users/{userId}/orders": {
+      "get": {
+        "description": "get user orders",
+        "operationId": "GET_users-userId-orders",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "description": "create new order",
+        "operationId": "POST_users-userId-orders",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "in": "path",
+          "name": "userId",
+          "required": true
+        }
+      ]
+    },
+    "/users/{userId}/orders/{orderId}": {
+      "get": {
+        "description": "get order information",
+        "operationId": "GET_users-userId-orders-orderId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "delete order",
+        "operationId": "DELETE_users-userId-orders-orderId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "in": "path",
+          "name": "orderId",
+          "required": true
+        },
+        {
+          "type": "string",
+          "in": "path",
+          "name": "userId",
+          "required": true
+        }
+      ]
+    },
+    "/roles": {
+      "get": {
+        "operationId": "GET_roles",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "operationId": "POST_roles",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/roles/{roleId}": {
+      "get": {
+        "operationId": "GET_roles-roleId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "operationId": "POST_roles-roleId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "operationId": "DELETE_roles-roleId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "in": "path",
+          "name": "roleId",
+          "required": true
+        }
+      ]
+    },
+    "/abilities": {
+      "get": {
+        "operationId": "GET_abilities",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/abilities/{abilityId}": {
+      "get": {
+        "operationId": "GET_abilities-abilityId",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "in": "path",
+          "name": "abilityId",
+          "required": true
+        }
+      ]
+    }
+  }
+}
