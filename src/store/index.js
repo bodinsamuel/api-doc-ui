@@ -17,7 +17,6 @@ export default new Vuex.Store({
   },
   mutations: {
     setScreen(state, screen) {
-      console.log(state, screen);
       state.screen = screen;
     },
     toggleMenu(state, to) {

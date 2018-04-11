@@ -17,6 +17,7 @@ export default {
     hasAuthentication: false,
     tags: [{ name: 'global', description: '', __slug: 'global' }],
     tagCurrent: null,
+    endpointCurrent: null,
     endpoints: [],
     endpointsGrouped: [],
     produces: [],
@@ -51,6 +52,11 @@ export default {
     },
     setTagCurrent(state, { name }) {
       state.tagCurrent = this.getters['Schema/tagBySlug'](name);
+    },
+    setEndpointCurrent(state, { name }) {
+      state.endpointCurrent = this.getters['Schema/endpointGroupedBySlug'](
+        name
+      );
     },
     setCurrent(state, { parsed }) {
       state.loading = false;
@@ -112,6 +118,9 @@ export default {
   actions: {
     tagCurrent({ commit }, { name }) {
       commit('setTagCurrent', { name });
+    },
+    endpointCurrent({ commit }, { name }) {
+      commit('setEndpointCurrent', { name });
     },
     async fetch({ commit, rootState }, { file }) {
       commit('setFile', file);

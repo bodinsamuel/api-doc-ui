@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="endpoint">
     <div class="bloc">
       <h2 class="u-mb20"><b>{{ endpoint.path }}</b></h2>
       <methods-list :methods="endpoint.endpoints"></methods-list>
@@ -21,9 +21,9 @@ import EndpointBloc from '@/components/EndpointBloc';
 
 export default {
   head() {
-    const endpoint = this.endpoint;
+    const path = this.endpoint ? this.endpoint.path : '';
     return {
-      title: `${endpoint.path} - ${this.schema.info.title} documentation`,
+      title: `${path} - ${this.schema.info.title} documentation`,
     };
   },
   components: {
@@ -37,21 +37,38 @@ export default {
     next();
   },
   created() {
+    // we watch the value to display a 404 if needed
+    // It could happen if an user followed an old link or made a typo or whatever
+    this.$store.watch(
+      (state) => state.Schema.tagCurrent,
+      (newValue) => {
+        if (!newValue) {
+          this.$store.state.page404 = true;
+        }
+      }
+    );
+    this.$store.watch(
+      (state) => state.Schema.endpointCurrent,
+      (newValue) => {
+        if (!newValue) {
+          this.$store.state.page404 = true;
+        }
+      }
+    );
+
     this.$store.dispatch('Schema/tagCurrent', {
       name: this.$route.params.name,
+    });
+    this.$store.dispatch('Schema/endpointCurrent', {
+      name: this.$route.params.endpoint,
     });
   },
   computed: {
     schema() {
       return this.$store.state.Schema.current;
     },
-    tag() {
-      return this.$store.getters['Schema/tagBySlug'](this.$route.params.name);
-    },
     endpoint() {
-      return this.$store.getters['Schema/endpointGroupedBySlug'](
-        this.$route.params.endpoint
-      );
+      return this.$store.state.Schema.endpointCurrent;
     },
   },
   methods: {
