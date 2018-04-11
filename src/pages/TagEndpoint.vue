@@ -1,5 +1,5 @@
 <template>
-  <div class="u-p40 container">
+  <div class="container">
     <div class="bloc">
       <h2 class="u-mb20"><b>{{ endpoint.path }}</b></h2>
       <methods-list :methods="endpoint.endpoints"></methods-list>

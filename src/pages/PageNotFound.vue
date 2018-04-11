@@ -1,5 +1,5 @@
 <template>
-  <div class="u-p40">
+  <div class="container">
     <h3 class="u-mt30">Error 404</h3>
     <h6 class="u-mt10">The page you requested was not found.</h6>
     <p class="u-mt50">

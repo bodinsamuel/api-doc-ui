@@ -1,5 +1,5 @@
 <template>
-  <div class="u-p40 container">
+  <div class="container">
     <div class="bloc">
       <h2 class="u-mb20">Authentication</h2>
       <p>All or some endpoints require you to use authentication, like this:</p>
@@ -56,6 +56,7 @@ export default {
       title: `Authentication - ${this.schema.info.title} Documentation`,
     };
   },
+
   computed: mapState({
     schema: (state) => state.Schema.current,
     host: (state) => state.Schema.host,
@@ -71,6 +72,7 @@ export default {
       };
     },
   }),
+
   methods: {
     codeHttp(def) {
       const endpoint = this.firstEndpoint;

@@ -1,6 +1,6 @@
 <template>
-  <div class="u-m40 container">
-    <div class="bloc" style="margin-top: 165px;">
+  <div class="container">
+    <div class="bloc">
       <h2 class="u-mb20">Presentation</h2>
       <vue-markdown class="markdown" :source="schema.info.description || 'Welcome !'"></vue-markdown>
       <div>

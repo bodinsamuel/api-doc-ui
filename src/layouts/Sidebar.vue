@@ -1,43 +1,46 @@
 <template>
-  <aside class="sidebar" v-if="schema">
-    <div class="brand" :class="{ 'is-big': currentRoute.name === 'Home' }">
-      <img :src="logo" alt="logo" class="logo" />
-      <div>
-        <h1 class="title">{{ schema.info.title }}</h1>
-        <p class="subtitle">
-          {{ schema.info.version }}
-        </p>
+  <aside class="sidebar" v-if="schema" :class="{ 'is-open': menu }">
+    <div class="click-trigger" @click="clickTrigger" v-if="menu"></div>
+    <div class="inner">
+      <div class="brand" :class="{ 'is-big': currentRoute.name === 'Home' && screen === 'desktop' }">
+        <img :src="logo" alt="logo" class="logo" />
+        <div>
+          <h1 class="title">{{ schema.info.title }}</h1>
+          <p class="subtitle">
+            {{ schema.info.version }}
+          </p>
+        </div>
       </div>
-    </div>
-    <nav>
-      <div class="nav-collection">
-        <router-link :to="{ name: 'Home' }" class="nav-item is-main is-home">Home</router-link>
-        <router-link v-if="hasAuthentication" :to="{ name: 'Authentication' }" class="nav-item is-main">Authentication</router-link>
-      </div>
+      <nav>
+        <div class="nav-collection">
+          <router-link :to="{ name: 'Home' }" class="nav-item is-main is-home">Home</router-link>
+          <router-link v-if="hasAuthentication" :to="{ name: 'Authentication' }" class="nav-item is-main">Authentication</router-link>
+        </div>
 
-      <div class="nav-collection">
-        <div class="nav-header">Endpoints</div>
-        <div class="nav-children">
-          <div v-for="(tag, key) in tags" :key="key" v-if="tag.name !== 'global'">
-            <router-link  :to="{ name: 'Tag', params: { name: tag.__slug }}" class="nav-item">{{ tag.name }}</router-link>
+        <div class="nav-collection">
+          <div class="nav-header">Endpoints</div>
+          <div class="nav-children">
+            <div v-for="(tag, key) in tags" :key="key" v-if="tag.name !== 'global'">
+              <router-link  :to="{ name: 'Tag', params: { name: tag.__slug }}" class="nav-item">{{ tag.name }}</router-link>
 
-            <div v-if="((currentRoute.name === 'TagEndpoint' || currentRoute.name === 'Tag') && currentRoute.params.name === tag.__slug) && tagEndpoint && tagEndpoint.length > 0"
-              class="nav-children u-pb20">
-              <router-link v-for="(endpoint, key) in tagEndpoint" :key="key"
-                :to="{ name: 'TagEndpoint', params: { name: tag.__slug, endpoint: endpoint.slug  }}"
-                :title="endpoint.path"
-                class="nav-item is-path">{{ endpoint.path }}</router-link>
+              <div v-if="((currentRoute.name === 'TagEndpoint' || currentRoute.name === 'Tag') && currentRoute.params.name === tag.__slug) && tagEndpoint && tagEndpoint.length > 0"
+                class="nav-children u-pb20">
+                <router-link v-for="(endpoint, key) in tagEndpoint" :key="key"
+                  :to="{ name: 'TagEndpoint', params: { name: tag.__slug, endpoint: endpoint.slug  }}"
+                  :title="endpoint.path"
+                  class="nav-item is-path">{{ endpoint.path }}</router-link>
+              </div>
+
             </div>
-
           </div>
-        </div>
 
-        <div v-if="tagGlobal" class="nav-children u-pb20">
-          <router-link v-for="(endpoint, key) in tagGlobal" :key="key" :to="{ name: 'TagEndpoint', params: { name: 'global', endpoint: endpoint.slug  }}" class="nav-item is-path" :title="endpoint.__path">{{ endpoint.path }}</router-link>
-        </div>
+          <div v-if="tagGlobal" class="nav-children u-pb20">
+            <router-link v-for="(endpoint, key) in tagGlobal" :key="key" :to="{ name: 'TagEndpoint', params: { name: 'global', endpoint: endpoint.slug  }}" class="nav-item is-path" :title="endpoint.__path">{{ endpoint.path }}</router-link>
+          </div>
 
-      </div>
-    </nav>
+        </div>
+      </nav>
+    </div>!
   </aside>
 </template>
 
@@ -59,6 +62,12 @@ export default {
     hasAuthentication() {
       return this.$store.state.Schema.hasAuthentication;
     },
+    screen() {
+      return this.$store.state.screen;
+    },
+    menu() {
+      return this.$store.state.menu;
+    },
     schema() {
       return this.$store.state.Schema.current;
     },
@@ -79,6 +88,11 @@ export default {
       return tag;
     },
   },
+  methods: {
+    clickTrigger() {
+      this.$store.commit('toggleMenu', 'close');
+    },
+  },
 };
 </script>
 
@@ -96,6 +110,7 @@ export default {
     transition: margin 0.3s ease-in-out, min-width 0.3s ease-in-out;
     justify-content: flex-start;
     min-width: 100%;
+    align-items: center;
     &.is-big {
       margin: 20px 50px 40px 40px;
       min-width: 100vw;
@@ -174,6 +189,32 @@ export default {
     &.is-main {
       font-size: $font-size-s;
       line-height: 30px;
+    }
+  }
+}
+
+@media (max-width: $bp-md) {
+  .sidebar {
+    position: absolute;
+    height: 100vh;
+    background: white;
+    box-shadow: 0 0 92px 10px rgba(0, 0, 0, 0.2);
+    padding: 0 10px 0 0;
+    transform: translate3d(-100%, 0, 0);
+    transition: transform 0.3s ease-out;
+    z-index: 1;
+    &.is-open {
+      transform: translate3d(0, 0, 0);
+    }
+    .inner {
+      position: relative;
+      z-index: 1;
+    }
+    .click-trigger {
+      position: absolute;
+      z-index: 1;
+      width: 100vw;
+      height: 100vh;
     }
   }
 }

@@ -1,16 +1,19 @@
-<template>
-  <div id="app">
+  <template>
+  <div id="app" :class="classes">
     <transition name="fade-in">
       <div v-if="ready && !error" class="main">
         <sidebar-view />
-        <main>
+
+        <main class="content">
           <header-view />
           <router-view v-if="!page404" />
           <page-not-found v-if="page404"/>
         </main>
       </div>
+
       <global-error v-if="error" />
     </transition>
+
     <transition name="fade-in">
       <div v-if="file && loading">
         <div class="u-p40">
@@ -18,11 +21,13 @@
         </div>
       </div>
     </transition>
+
     <div v-if="!file && !loading">
       <div class="u-p40">
         <h1 class="u-mb20">No file specified...</h1>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -74,7 +79,19 @@ export default {
       this.$store.state.page404 = false;
     },
   },
+  mounted() {
+    if (window.matchMedia('(min-width: 900px)').matches) {
+      this.$store.commit('setScreen', 'desktop');
+    } else {
+      this.$store.commit('setScreen', 'mobile');
+    }
+  },
   computed: {
+    classes() {
+      const screen = this.screen;
+      const route = this.$route.name;
+      return [`is-screen-${screen}`, `is-route-${route}`];
+    },
     file() {
       if (!this.$store.state.Schema.file) {
         return false;
@@ -84,6 +101,9 @@ export default {
     },
     loading() {
       return this.$store.state.Schema.loading;
+    },
+    screen() {
+      return this.$store.state.screen;
     },
     definition() {
       return this.$store.state.Schema.current;
@@ -127,6 +147,12 @@ export default {
   display: grid;
   grid-template-columns: 250px auto;
   min-height: 100vh;
+  min-width: $bp-xs - 200px;
+}
+@media (max-width: $bp-md) {
+  .main {
+    display: block;
+  }
 }
 
 @import '~@/styles/globals.scss';

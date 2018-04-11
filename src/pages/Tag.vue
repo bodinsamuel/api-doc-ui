@@ -1,5 +1,5 @@
 <template>
-  <div class="u-p40 container" v-if="tag">
+  <div class="container" v-if="tag">
     <div class="bloc">
       <div v-if="tag.externalDocs" style="float: right;">
         <a :href="tag.externalDocs.url" class="button success" :title="tag.externalDocs.url">Find out more !</a>

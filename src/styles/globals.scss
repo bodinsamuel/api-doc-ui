@@ -14,6 +14,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-weight: 300;
   text-transform: capitalize;
   color: $color-base;
+  word-wrap: break-word;
   .tag {
     margin-left: 0!important;
   }
@@ -61,6 +62,13 @@ a {
   &:hover {
     text-decoration: underline;
   }
+}
+
+.icon {
+  width: 30px;
+  position: relative;
+  height: 30px;
+  display: inline-block;
 }
 
 // Utils
@@ -166,7 +174,27 @@ $positions: ( 'top', 'right', 'bottom', 'left' );
 
 .container {
   max-width: 900px;
-  // margin: 0 auto;
+  padding: 40px;
+}
+#app.is-screen-desktop {
+  &.is-route-Home {
+    .content {
+      margin-top: 85px;
+    }
+  }
+  .content {
+    transition: margin-top 0.3s ease-in-out;
+  }
+}
+@media (max-width: $bp-xs) {
+  .container {
+    padding: 20px;
+  }
+}
+@media (min-width: $bp-xs) and (max-width: $bp-sm) {
+  .container {
+    padding: 30px;
+  }
 }
 
 .bloc {
@@ -198,6 +226,13 @@ $positions: ( 'top', 'right', 'bottom', 'left' );
 }
 
 
+button {
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
 .button {
   display: inline-block;
   padding: 5px 10px;

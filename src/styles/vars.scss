@@ -6,10 +6,17 @@ $line-height-base: 20px;
 $font-stack1: 400 #{$font-size-base}/#{$line-height-base} $font1;
 $font-stack2: 400 #{$font-size-base}/#{$line-height-base} $font2;
 
-
+// font-size
 $font-size-xs: 12px;
 $font-size-s: 14px;
 $font-size-l: 18px;
+
+
+// Breakpoint
+$bp-xs: 575px;
+$bp-sm: 767px;
+$bp-md: 900px;
+$bp-lg: 1199px;
 
 
 // COLOR
