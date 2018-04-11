@@ -39,7 +39,7 @@
 
         </div>
       </nav>
-    </div>!
+    </div>
   </aside>
 </template>
 

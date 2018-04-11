@@ -1,5 +1,6 @@
 import SwaggerParser from 'swagger-parser';
 import slugify from 'slugify';
+import JSYAML from 'js-yaml';
 
 import SpecMinimumCheck from '@/helpers/spec-minimum-check';
 import SpecNormalizer from '@/helpers/spec-normalizer';
@@ -131,7 +132,14 @@ export default {
 
       try {
         if (typeof file === 'string') {
-          file = await fetch(file);
+          const response = await fetch(file);
+          const text = await response.text();
+
+          if (text.startsWith('{')) {
+            file = JSON.parse(text);
+          } else {
+            file = JSYAML.load(text);
+          }
         }
 
         const hasError = await SpecMinimumCheck(file);
