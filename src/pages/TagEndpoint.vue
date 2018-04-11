@@ -63,6 +63,16 @@ export default {
       name: this.$route.params.endpoint,
     });
   },
+  beforeRouteUpdate(to, from, next) {
+    console.log('on update la');
+    this.$store.dispatch('Schema/tagCurrent', {
+      name: to.params.name,
+    });
+    this.$store.dispatch('Schema/endpointCurrent', {
+      name: to.params.endpoint,
+    });
+    next();
+  },
   computed: {
     schema() {
       return this.$store.state.Schema.current;
