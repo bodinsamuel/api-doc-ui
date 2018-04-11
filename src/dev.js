@@ -6,5 +6,5 @@ import fullspec from 'json-loader!@/../static/swagger2/petstore.json';
 // import fullspec from 'raw-loader!@/../static/raml/typhon.raml';
 
 main({
-  file: '/static/swagger2/petstore.json',
+  file: '/static/swagger2/instagram.yaml',
 });
